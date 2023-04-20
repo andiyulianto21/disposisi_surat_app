@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Arsip Surat Pembinaan</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_surat">No Surat</string>
+    <string name="tgl_surat">Tanggal Surat</string>
+    <string name="instansi_pengirim">Instansi Pengirim</string>
+    <string name="sifat_surat">Sifat Surat</string>
+    <string name="perihal">Perihal</string>
+    <string name="file_surat">File Surat</string>
+    <string name="desk_konfirmasi_tambah_suratmasuk">Apakah anda yakin ingin menyimpan data surat masuk ini?</string>
+    <string name="judul_konfirmasi_tambah_suratmasuk">Konfirmasi Simpan Surat</string>
+</resources>

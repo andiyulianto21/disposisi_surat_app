@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_menu_suratMasuk"
+            app:destination="@id/menu_suratMasuk"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_profil"
+        android:name="com.daylantern.arsipsuratpembinaan.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_menu_profil_to_ubahDataDiriFragment"
+            app:destination="@id/ubahDataDiriFragment" />
+        <action
+            android:id="@+id/action_menu_profil_to_gantiPasswordFragment"
+            app:destination="@id/gantiPasswordFragment" />
+        <action
+            android:id="@+id/action_menu_profil_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_disposisi"
+        android:name="com.daylantern.arsipsuratpembinaan.DisposisiFragment"
+        android:label="fragment_disposisi"
+        tools:layout="@layout/fragment_disposisi" />
+    <fragment
+        android:id="@+id/menu_suratMasuk"
+        android:name="com.daylantern.arsipsuratpembinaan.SuratMasukFragment"
+        android:label="fragment_surat_masuk"
+        tools:layout="@layout/fragment_surat_masuk" >
+        <action
+            android:id="@+id/action_menu_suratMasuk_to_tambahSuratMasukFragment"
+            app:destination="@id/tambahSuratMasukFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/menu_suratKeluar"
+        android:name="com.daylantern.arsipsuratpembinaan.SuratKeluarFragment"
+        android:label="fragment_surat_keluar"
+        tools:layout="@layout/fragment_surat_keluar" />
+    <fragment
+        android:id="@+id/ubahDataDiriFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.UbahDataDiriFragment"
+        android:label="fragment_ubah_data_diri"
+        tools:layout="@layout/fragment_ubah_data_diri" />
+    <fragment
+        android:id="@+id/gantiPasswordFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.GantiPasswordFragment"
+        android:label="fragment_ganti_password"
+        tools:layout="@layout/fragment_ganti_password" />
+    <fragment
+        android:id="@+id/tambahSuratMasukFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.TambahSuratMasukFragment"
+        android:label="fragment_tambah_surat_masuk"
+        tools:layout="@layout/fragment_tambah_surat_masuk" />
+    <fragment
+        android:id="@+id/buatDisposisiFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.BuatDisposisiFragment"
+        android:label="fragment_buat_disposisi"
+        tools:layout="@layout/fragment_buat_disposisi" />
+    <fragment
+        android:id="@+id/tambahDisposisiFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.TambahDisposisiFragment"
+        android:label="fragment_tambah_disposisi"
+        tools:layout="@layout/fragment_tambah_disposisi" />
+</navigation>
