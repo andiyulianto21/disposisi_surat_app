@@ -45,6 +45,12 @@
         <action
             android:id="@+id/action_menu_suratMasuk_to_tambahSuratMasukFragment"
             app:destination="@id/tambahSuratMasukFragment" />
+        <action
+            android:id="@+id/action_menu_suratMasuk_to_tambahDisposisiFragment"
+            app:destination="@id/tambahDisposisiFragment" />
+        <action
+            android:id="@+id/action_menu_suratMasuk_to_detailSuratMasukFragment"
+            app:destination="@id/detailSuratMasukFragment" />
     </fragment>
     <fragment
         android:id="@+id/menu_suratKeluar"
@@ -73,7 +79,20 @@
         tools:layout="@layout/fragment_buat_disposisi" />
     <fragment
         android:id="@+id/tambahDisposisiFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.TambahDisposisiFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.TambahDisposisiFragment"
         android:label="fragment_tambah_disposisi"
-        tools:layout="@layout/fragment_tambah_disposisi" />
+        tools:layout="@layout/fragment_tambah_disposisi" >
+        <argument
+            android:name="idSuratMasuk"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailSuratMasukFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.DetailSuratMasukFragment"
+        android:label="fragment_detail_surat_masuk"
+        tools:layout="@layout/fragment_detail_surat_masuk" >
+        <argument
+            android:name="idSuratMasuk"
+            app:argType="integer" />
+    </fragment>
 </navigation>

@@ -1,28 +1,15 @@
-package com.daylantern.arsipsuratpembinaan
+package com.daylantern.arsipsuratpembinaan.activities
 
-import android.content.Intent
 import android.content.SharedPreferences
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.core.view.isNotEmpty
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.transition.Fade
-import androidx.transition.TransitionManager
-import com.daylantern.arsipsuratpembinaan.activities.LoginActivity
+import com.daylantern.arsipsuratpembinaan.ApiService
+import com.daylantern.arsipsuratpembinaan.R
 import com.daylantern.arsipsuratpembinaan.databinding.ActivityMainBinding
-import com.daylantern.arsipsuratpembinaan.fragments.LoginFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.hilt.android.AndroidEntryPoint
-import okhttp3.MultipartBody
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -54,16 +41,15 @@ class MainActivity : AppCompatActivity() {
             if (destination.id == R.id.ubahDataDiriFragment
                 || destination.id == R.id.gantiPasswordFragment
                 || destination.id == R.id.loginFragment
-                || destination.id == R.id.tambahSuratMasukFragment) {
+                || destination.id == R.id.tambahSuratMasukFragment
+                || destination.id == R.id.detailSuratMasukFragment
+                || destination.id == R.id.tambahDisposisiFragment
+            ) {
                 binding.bottomNavView.visibility = View.GONE
             } else {
                 binding.bottomNavView.visibility = View.VISIBLE
             }
         }
-
-    }
-
-    fun login(){
 
     }
 }

@@ -30,7 +30,7 @@ class DisposisiFragment : Fragment() {
         navC = Navigation.findNavController(view)
 
         binding.btnTestDisposisi.setOnClickListener {
-            navC.navigate(R.id.tambahDisposisiFragment)
+            navC.navigate(R.id.detailSuratMasukFragment)
         }
     }
 }

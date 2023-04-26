@@ -5,60 +5,71 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.daylantern.arsipsuratpembinaan.R
+import com.daylantern.arsipsuratpembinaan.OnItemClickListener
 import com.daylantern.arsipsuratpembinaan.databinding.CardPilihDataBinding
-import com.daylantern.arsipsuratpembinaan.databinding.CardPilihSatuDataBinding
 import com.daylantern.arsipsuratpembinaan.models.PilihData
 
-class RvPilihDataAdapter(var items: List<PilihData>) :RecyclerView.Adapter<RvPilihDataAdapter.RvPilihDataHolder>() {
+class RvPilihDataAdapter(var items: List<PilihData>) :
+    RecyclerView.Adapter<RvPilihDataAdapter.RvPilihDataHolder>() {
 
     private lateinit var context: Context
-    private var isChecked: Boolean = false
+    private var listener: OnItemClickListener? = null
 
-    class RvPilihDataHolder(val binding: CardPilihSatuDataBinding) :
-        RecyclerView.ViewHolder(binding.root)
+    fun setOnClickListener(listener: OnItemClickListener) {
+        this.listener = listener
+    }
+
+    fun getSelectedItem(): List<PilihData> {
+        val selected = mutableListOf<PilihData>()
+        items.filter { it.isChecked }.forEach {
+            selected.add(it)
+        }
+        return selected
+    }
+
+    fun resetSelected() {
+        items.forEach { it.isChecked = false }
+        notifyDataSetChanged()
+    }
+
+    inner class RvPilihDataHolder(val binding: CardPilihDataBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: PilihData) {
+            if (item.isChecked) {
+                itemView.visibility = View.GONE
+            } else {
+                itemView.visibility = View.VISIBLE
+            }
+            binding.tvNamaData.text = item.title
+
+            binding.cbTerpilih.isChecked = item.isChecked
+            if (item.isChecked) {
+                itemView.visibility = View.GONE
+            } else {
+                itemView.visibility = View.VISIBLE
+            }
+
+            itemView.setOnClickListener {
+                if (item.isChecked) {
+                    binding.cbTerpilih.isChecked = false
+                    item.isChecked = false
+                } else {
+                    binding.cbTerpilih.isChecked = true
+                    item.isChecked = true
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RvPilihDataHolder {
         context = parent.context
-        val view = CardPilihSatuDataBinding.inflate(LayoutInflater.from(parent.context))
+        val view = CardPilihDataBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RvPilihDataHolder(view)
     }
 
     override fun onBindViewHolder(holder: RvPilihDataHolder, position: Int) {
-
-        val item = items[position]
-        holder.binding.apply {
-            tvNamaData.text = item.title
-            root.setOnClickListener {
-                if(isChecked){
-                    cbTerpilih.isChecked = false
-                    cbTerpilih.visibility = View.INVISIBLE
-                    it.setBackgroundColor(context.resources.getColor(R.color.white))
-                }else {
-                    cbTerpilih.isChecked = true
-                    cbTerpilih.visibility = View.VISIBLE
-                    it.setBackgroundColor(context.resources.getColor(R.color.purple_200))
-                }
-                isChecked = !isChecked
-            }
-        }
-
-
-
-//        val item = items[position]
-//        holder.binding.apply {
-//            tvNamaData.text = item.title
-//            cbTerpilih.isChecked = item.isChecked
-//            cbTerpilih.setOnCheckedChangeListener { _, bool ->
-//                if(bool){
-//                    cbTerpilih.visibility = View.VISIBLE
-//                }else {
-//                    cbTerpilih.visibility = View.INVISIBLE
-//                }
-//                item.isChecked = bool
-//                holder.binding.cbTerpilih.isChecked = bool
-//            }
-//        }
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {

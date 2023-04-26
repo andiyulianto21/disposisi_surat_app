@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/img_status_surat"
+            android:layout_width="5dp"
+            android:layout_height="0dp"
+            android:background="@color/purple_700"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/tv_no_surat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Surat"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/img_status_surat"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_lingkaran"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/rounded_rectangle"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_no_surat"
+            app:layout_constraintStart_toEndOf="@+id/tv_no_surat"
+            app:layout_constraintTop_toTopOf="@+id/tv_no_surat" />
+
+        <TextView
+            android:id="@+id/tv_sifat_surat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Sifat"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_no_surat"
+            app:layout_constraintStart_toEndOf="@id/img_lingkaran"
+            app:layout_constraintTop_toTopOf="@+id/tv_no_surat" />
+
+        <TextView
+            android:id="@+id/tv_tgl_surat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20 April 2023"
+            android:textSize="12sp"
+            android:layout_marginRight="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_sifat_surat"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_sifat_surat" />
+
+        <TextView
+            android:id="@+id/tv_perihal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Perihal Surat"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/tv_tgl_surat"
+            app:layout_constraintStart_toStartOf="@+id/tv_no_surat"
+            app:layout_constraintTop_toBottomOf="@+id/tv_no_surat" />
+
+        <TextView
+            android:id="@+id/tv_instansi_pengirim"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Instansi Pengirim"
+            android:textSize="12sp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tv_perihal"
+            app:layout_constraintStart_toStartOf="@+id/tv_perihal"
+            app:layout_constraintTop_toBottomOf="@+id/tv_perihal" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
