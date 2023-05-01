@@ -25,15 +25,17 @@ class DetailSuratMasukViewModel @Inject constructor(private val suratMasukRepo: 
     val errorMessage: LiveData<String?> get() = _errorMessage
 
     fun fetchSuratMasuk(idSuratMasuk: Int) {
-        _isLoading.value = true
         viewModelScope.launch {
             try {
+                _isLoading.value = true
                 val result = suratMasukRepo.getSuratMasukById(idSuratMasuk)
                 if (result.status == 200) {
                     _dataSuratMasuk.value = result.data
+                    _errorMessage.value = null
+                }else if(result.status == 404){
+                    _errorMessage.value = result.messages
                 }
                 _isLoading.value = false
-                _errorMessage.value = null
             }catch (e: IOException) {
                 _errorMessage.value = "Gagal menemukan koneksi internet!\nPastikan Internet atau WI-FI anda nyala"
                 _isLoading.value = false

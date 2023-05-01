@@ -36,6 +36,8 @@ class SuratMasukViewModel @Inject constructor(private val suratMasukRepo: SuratM
             }catch (e: IOException) {
                 _errorMessage.value = "Gagal menemukan koneksi internet!\nPastikan Internet atau WI-FI anda nyala"
                 _isLoading.value = false
+            }catch (e: Exception){
+
             }
         }
     }

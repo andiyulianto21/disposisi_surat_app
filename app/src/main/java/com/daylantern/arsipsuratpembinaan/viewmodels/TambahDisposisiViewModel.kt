@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.daylantern.arsipsuratpembinaan.entities.Pegawai
 import com.daylantern.arsipsuratpembinaan.entities.SuratMasuk
-import com.daylantern.arsipsuratpembinaan.models.PegawaiModel
 import com.daylantern.arsipsuratpembinaan.models.PilihData
 import com.daylantern.arsipsuratpembinaan.repositories.PegawaiRepository
 import com.daylantern.arsipsuratpembinaan.repositories.SuratMasukRepository
@@ -36,6 +34,8 @@ class TambahDisposisiViewModel @Inject constructor(
     private val _isSuccess = MutableLiveData(false)
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
+    private var _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     fun getIdPegawai(name: String): Int?{
         return _listPegawai.value?.find { it.title == name }?.id
@@ -71,12 +71,16 @@ class TambahDisposisiViewModel @Inject constructor(
     fun fetchSuratMasuk(idSurat: Int) {
         viewModelScope.launch {
             try {
+                _isLoading.value = true
                 val result = suratMasukRepo.getSuratMasukById(idSurat)
                 if (result.status == 200) {
                     _suratMasuk.postValue(result.data)
+                }else if(result.status == 404){
+//                    _errorMessage.value = result.messages
                 }
+                _isLoading.value = false
             } catch (e: IOException) {
-
+                _isLoading.value = false
             }
         }
     }

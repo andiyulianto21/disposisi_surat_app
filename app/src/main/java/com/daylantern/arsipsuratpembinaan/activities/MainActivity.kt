@@ -28,11 +28,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        var isLogin = sharedPreferences.getBoolean("login", false)
-//        if(!isLogin){
-//            startActivity(Intent(applicationContext, LoginActivity::class.java))
-//        }
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val controller = navHostFragment.navController
         binding.bottomNavView.setupWithNavController(controller)
@@ -44,6 +39,7 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.tambahSuratMasukFragment
                 || destination.id == R.id.detailSuratMasukFragment
                 || destination.id == R.id.tambahDisposisiFragment
+                || destination.id == R.id.cameraFragment
             ) {
                 binding.bottomNavView.visibility = View.GONE
             } else {

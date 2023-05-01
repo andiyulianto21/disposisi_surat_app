@@ -1,9 +1,12 @@
 package com.daylantern.arsipsuratpembinaan.viewmodels
 
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.daylantern.arsipsuratpembinaan.models.FileSuratModel
 import com.daylantern.arsipsuratpembinaan.models.InstansiModel
 import com.daylantern.arsipsuratpembinaan.models.SifatModel
 import com.daylantern.arsipsuratpembinaan.repositories.InstansiRepository
@@ -11,6 +14,12 @@ import com.daylantern.arsipsuratpembinaan.repositories.SifatSuratRepository
 import com.daylantern.arsipsuratpembinaan.repositories.SuratMasukRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,8 +36,8 @@ class TambahSuratMasukViewModel @Inject constructor(
     val dataSifat: LiveData<List<SifatModel>> get() = _dataSifat
 
     private val _errorBottomSheet = MutableLiveData<String?>()
-    val errorBottomSheet: LiveData<String?> get() = _errorBottomSheet
 
+    val errorBottomSheet: LiveData<String?> get() = _errorBottomSheet
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> get() = _message
 
@@ -47,8 +56,9 @@ class TambahSuratMasukViewModel @Inject constructor(
 
     fun insertSurat(
         noSurat: String,
-        tglSurat: String,
         perihal: String,
+        tglSuratMasuk: String,
+        listFile: List<String>
     ) {
         val idInstansi = getIdInstansiSelected(_dataInstansi.value!!.toList())
         val idSifat = getIdSifatSelected(_dataSifat.value!!.toList())
@@ -60,15 +70,32 @@ class TambahSuratMasukViewModel @Inject constructor(
             _message.value = "Sifat Surat belum dipilih / kosong"
             return
         }
+        val files = mutableListOf<MultipartBody.Part>()
+        listFile.forEach {filePath ->
+            val file = File(filePath)
+            val requestFile = RequestBody.create("image/jpg".toMediaTypeOrNull(), file)
+            val part = MultipartBody.Part.createFormData("file[]", file.name, requestFile)
+            files.add(part)
+        }
         viewModelScope.launch {
-            _message.value = ""
-            val result = suratMasukRepo.addSuratMasuk(noSurat, idInstansi, idSifat, perihal, tglSurat)
-            if(result.status == 200){
-                _message.value = result.message
-                _isSuccess.value = true
-            }else {
-                _message.value = result.message
-                _isSuccess.value = false
+            try {
+                _message.value = ""
+                val result = suratMasukRepo.addSuratMasuk(noSurat,
+                    idInstansiParam = idInstansi,
+                    idSifatParam = idSifat,
+                    perihalParam = perihal,
+                    tglSuratMasukParam = tglSuratMasuk,
+                    listFile = files
+                )
+                if(result.status == 200){
+                    _message.value = result.message
+                    _isSuccess.value = true
+                }else {
+                    _message.value = result.message
+                    _isSuccess.value = false
+                }
+            }catch (e: Exception) {
+                Log.d("fail", "insertSurat failed: ${e.message}")
             }
         }
     }
@@ -101,13 +128,21 @@ class TambahSuratMasukViewModel @Inject constructor(
 
     fun fetchInstansi() {
         viewModelScope.launch {
-            _dataInstansi.postValue(instansiRepo.getInstansi())
+            try {
+                _dataInstansi.postValue(instansiRepo.getInstansi())
+            }catch (e: Exception) {
+
+            }
         }
     }
 
     fun fetchSifat() {
         viewModelScope.launch {
-            _dataSifat.postValue(sifatRepo.getSifat())
+            try {
+                _dataSifat.postValue(sifatRepo.getSifat())
+            }catch (e: Exception){
+
+            }
         }
     }
 

@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/menu_profil"
-        android:name="com.daylantern.arsipsuratpembinaan.ProfileFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action
@@ -39,7 +39,7 @@
         tools:layout="@layout/fragment_disposisi" />
     <fragment
         android:id="@+id/menu_suratMasuk"
-        android:name="com.daylantern.arsipsuratpembinaan.SuratMasukFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.SuratMasukFragment"
         android:label="fragment_surat_masuk"
         tools:layout="@layout/fragment_surat_masuk" >
         <action
@@ -59,7 +59,7 @@
         tools:layout="@layout/fragment_surat_keluar" />
     <fragment
         android:id="@+id/ubahDataDiriFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.UbahDataDiriFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.UbahDataDiriFragment"
         android:label="fragment_ubah_data_diri"
         tools:layout="@layout/fragment_ubah_data_diri" />
     <fragment
@@ -95,4 +95,9 @@
             android:name="idSuratMasuk"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>

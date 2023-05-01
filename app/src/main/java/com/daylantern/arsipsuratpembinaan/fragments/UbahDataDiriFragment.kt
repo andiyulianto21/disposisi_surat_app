@@ -1,25 +1,20 @@
-package com.daylantern.arsipsuratpembinaan
+package com.daylantern.arsipsuratpembinaan.fragments
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
-import android.util.Patterns
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.daylantern.arsipsuratpembinaan.ApiService
+import com.daylantern.arsipsuratpembinaan.R
 import com.daylantern.arsipsuratpembinaan.databinding.FragmentUbahDataDiriBinding
 import com.daylantern.arsipsuratpembinaan.models.PegawaiModel
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -46,10 +41,12 @@ class UbahDataDiriFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as AppCompatActivity).supportActionBar?.title = "Ubah Data Diri"
         navC = Navigation.findNavController(view)
         val idPegawai = sharedPref.getInt("idPegawai", 0)
         val listJabatan = arrayListOf("Tata Usaha", "Guru", "Kepala Sekolah")
-        val arrayAdapterJabatan = ArrayAdapter(requireContext(), R.layout.dropdowntext_pegawai, listJabatan)
+        val arrayAdapterJabatan = ArrayAdapter(requireContext(),
+            R.layout.dropdowntext_pegawai, listJabatan)
         getDataPegawai(idPegawai)
 
         binding.autoCompletePegawai.setAdapter(arrayAdapterJabatan)

@@ -14,5 +14,6 @@ data class SuratMasuk(
     @SerializedName("sifat_surat") val sifatSurat: String,
     @SerializedName("status_surat") val statusSurat: String,
     @SerializedName("catatan_disposisi") val catatanDisposisi: String? = null,
-    @SerializedName("disposisi_tujuan") val disposisiTujuan: ArrayList<String> = arrayListOf()
+    @SerializedName("disposisi_tujuan") val disposisiTujuan: ArrayList<String> = arrayListOf(),
+    @SerializedName("file_surat") val fileSurat: ArrayList<String> = arrayListOf()
 )

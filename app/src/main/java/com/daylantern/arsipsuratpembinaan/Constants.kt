@@ -1,7 +1,13 @@
 package com.daylantern.arsipsuratpembinaan
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.database.Cursor
+import android.net.Uri
+import android.provider.MediaStore
+import android.util.Log
 import android.util.Patterns
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -9,9 +15,42 @@ object Constants {
 
     const val BASE_URL = "http://10.0.2.2/arsipsuratskripsi/"
     const val SHARED_PREF_NAME = "arsip_surat"
+    const val PREF_ID_PEGAWAI = "idPegawai"
+    const val PERMISSION_REQ_CODE = 100
+    const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
+    const val KEY_PHOTO = "key_photo"
 
     fun isEmailValid(email: CharSequence): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    fun getFileFromUri(context: Context, uri: Uri): File? {
+        val contentResolver = context.contentResolver
+        val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = contentResolver.query(uri, filePathColumn, null, null, null)
+        cursor?.moveToFirst()
+        val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
+        val filePath = cursor?.getString(columnIndex!!)
+        cursor?.close()
+        return filePath?.let { File(it) }
+    }
+
+    fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
+        var cursor: Cursor? = null
+        return try {
+            val proj = arrayOf(MediaStore.Images.Media.DATA)
+            cursor = context.contentResolver.query(contentUri, proj, null, null, null)
+            val columnIndex: Int = cursor?.getColumnIndexOrThrow(MediaStore.Images.Media.DATA) ?: 0
+            cursor?.moveToFirst()
+            cursor?.getString(columnIndex)
+        } catch (e: Exception) {
+            Log.e("error", "getRealPathFromURI Exception : $e")
+            ""
+        } finally {
+            if (cursor != null) {
+                cursor.close()
+            }
+        }
     }
 
     val months = listOf(

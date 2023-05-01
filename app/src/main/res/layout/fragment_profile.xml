@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".fragments.ProfileFragment">
 
     <TextView
         android:id="@+id/tv_nama_pegawai"
@@ -27,10 +27,10 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_nama_pegawai" />
 
     <TextView
-        android:id="@+id/tv_email_pegawai"
+        android:id="@+id/tv_nuptk_pegawai"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Email"
+        android:text="NUPTK"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tv_nama_pegawai"
         app:layout_constraintTop_toBottomOf="@id/tv_jabatan_pegawai"

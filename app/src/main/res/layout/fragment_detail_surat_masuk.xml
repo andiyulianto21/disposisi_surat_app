@@ -7,6 +7,7 @@
     android:paddingHorizontal="15dp"
     tools:context=".fragments.DetailSuratMasukFragment">
 
+
     <ProgressBar
         android:id="@+id/pb_tambah_disposisi"
         android:layout_width="wrap_content"
@@ -38,10 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:textAlignment="center"
-        android:visibility="gone"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -212,52 +213,17 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent=".35" />
 
-                <HorizontalScrollView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_file_surat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
+                    android:overScrollMode="never"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line_detail_surat">
+                    app:layout_constraintTop_toBottomOf="@id/line_detail_surat" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <FrameLayout
-                            android:id="@+id/fl_file_surat"
-                            android:layout_width="150dp"
-                            android:layout_height="120dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/bg_file_surat" />
-
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_margin="12dp">
-
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:scaleType="centerCrop"
-                                    android:src="@mipmap/ic_launcher" />
-
-                            </FrameLayout>
-
-                        </FrameLayout>
-
-
-                    </LinearLayout>
-
-
-                </HorizontalScrollView>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -427,9 +393,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:text="Catatan:"
                         android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:text="Catatan:" />
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/tv_catatan_disposisi"
@@ -445,15 +411,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp"
+                        android:text="Kepada:"
                         android:textColor="@color/black"
-                        android:textSize="12sp"
-                        android:text="Kepada:" />
+                        android:textSize="12sp" />
 
                     <com.google.android.material.chip.ChipGroup
                         android:id="@+id/chip_disposisi_tertuju"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                    </com.google.android.material.chip.ChipGroup>
+                        android:layout_height="wrap_content"></com.google.android.material.chip.ChipGroup>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

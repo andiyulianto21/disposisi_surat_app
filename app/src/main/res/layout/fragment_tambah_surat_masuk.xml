@@ -8,13 +8,15 @@
     >
 
     <androidx.core.widget.NestedScrollView
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:overScrollMode="never"
         app:layout_constraintBottom_toTopOf="@id/btn_simpan_surat_masuk"
-        android:layout_height="0dp">
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -37,9 +39,9 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:hintAnimationEnabled="false"
                 app:hintEnabled="false"
-                android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@+id/tv_no_surat">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -47,10 +49,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="Isi nomor surat masuk"
-                    android:maxLength="100"
-                    android:maxLines="1"
                     android:inputType="text"
-                    />
+                    android:maxLength="100"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -78,9 +79,9 @@
                     android:id="@+id/input_tgl_surat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Pilih tanggal"
                     android:cursorVisible="false"
-                    android:focusable="false" />
+                    android:focusable="false"
+                    android:hint="Pilih tanggal" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -95,7 +96,7 @@
 
                 <TextView
                     android:id="@+id/tv_instansi_pengirim"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/instansi_pengirim"
@@ -127,21 +128,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:inputType="none"
-                    android:maxLines="1"
                     android:ellipsize="end"
-                    android:hint="Pilih instansi"/>
+                    android:hint="Pilih instansi"
+                    android:inputType="none"
+                    android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-<!--            <com.google.android.material.chip.ChipGroup-->
-<!--                android:id="@+id/chip_instansi"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintHorizontal_bias="0.5"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/ll_instansi_pengirim"/>-->
+            <!--            <com.google.android.material.chip.ChipGroup-->
+            <!--                android:id="@+id/chip_instansi"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintHorizontal_bias="0.5"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/ll_instansi_pengirim"/>-->
 
             <LinearLayout
                 android:id="@+id/ll_sifat_surat"
@@ -154,7 +155,7 @@
 
                 <TextView
                     android:id="@+id/tv_sifat_surat"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/sifat_surat"
@@ -187,10 +188,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:inputType="none"
-                    android:maxLines="1"
                     android:ellipsize="end"
-                    android:hint="Pilih sifat"/>
+                    android:hint="Pilih sifat"
+                    android:inputType="none"
+                    android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -218,12 +219,11 @@
                     android:id="@+id/input_perihal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:gravity="top"
                     android:hint="Isi singkat perihal"
                     android:inputType="text"
-                    android:maxLines="2"
-                    android:gravity="top"
                     android:maxLength="255"
-                    />
+                    android:maxLines="2" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -237,14 +237,23 @@
 
                 <TextView
                     android:id="@+id/tv_file_surat"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/file_surat"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tv_total_file_terpilih"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 Terpilih"
+                    android:textSize="12sp"
+                    android:layout_marginEnd="15dp"/>
+
                 <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_pilih_file"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
                     android:text="pilih file"
@@ -255,62 +264,18 @@
 
             </LinearLayout>
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_file_surat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
+                android:overScrollMode="never"
+                tools:listitem="@layout/card_preview_file"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_file_surat">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:id="@+id/fl_file_surat"
-                        android:layout_width="150dp"
-                        android:layout_height="120dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/bg_file_surat" />
-
-                        <FrameLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
-                            android:layout_margin="12dp">
-
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@mipmap/ic_launcher" />
-
-                        </FrameLayout>
-
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_gravity="right"
-                            android:src="@drawable/ic_close" />
-
-                    </FrameLayout>
-
-
-                </LinearLayout>
-
-
-            </HorizontalScrollView>
-
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_file_surat"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
 
     </androidx.core.widget.NestedScrollView>

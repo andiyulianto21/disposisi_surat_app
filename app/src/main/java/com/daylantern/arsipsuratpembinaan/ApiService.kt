@@ -4,26 +4,29 @@ import com.daylantern.arsipsuratpembinaan.entities.*
 import com.daylantern.arsipsuratpembinaan.models.InstansiModel
 import com.daylantern.arsipsuratpembinaan.models.PegawaiModel
 import com.daylantern.arsipsuratpembinaan.models.SifatModel
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 
 interface ApiService {
 
     @FormUrlEncoded
     @POST("android/login")
-    fun login(
+    suspend fun login(
         @Field("nuptk") nuptk: String,
         @Field("password") password: String
-    ): ResultDataResponse<PegawaiModel>
+    ): ResultDataResponse<Pegawai>
 
     @GET("android/pegawai/{id}")
     fun getDataPegawai(@Path("id") idPegawai: Int): ResultDataResponse<PegawaiModel>
 
     @GET("android/pegawai")
     suspend fun getPegawai(): List<Pegawai>
+
+    @GET("android/pegawai/{id}")
+    suspend fun getLoggedInPegawai(
+        @Path("id") idPegawai: Int
+    ): ResultDataResponse<Pegawai>
 
     @FormUrlEncoded
     @POST("android/ubah_data/{id}")
@@ -67,14 +70,31 @@ interface ApiService {
     @GET("android/surat_masuk")
     suspend fun getSuratMasuk(): ResultListDataResponse<SuratMasuk>
 
-    @FormUrlEncoded
+//    @FormUrlEncoded
+//    @POST("android/tambah_surat_masuk")
+//    suspend fun addSuratMasuk(
+//        @Field("no_surat") noSurat: String,
+//        @Field("id_instansi") idInstansi: String,
+//        @Field("id_sifat") idSifat: String,
+//        @Field("perihal") perihal: String,
+//        @Field("tgl_surat_masuk") tglSuratMasuk: String,
+//    ): ResultResponse
+
+    @Multipart
     @POST("android/tambah_surat_masuk")
     suspend fun addSuratMasuk(
-        @Field("no_surat") noSurat: String,
-        @Field("id_instansi") idInstansi: String,
-        @Field("id_sifat") idSifat: String,
-        @Field("perihal") perihal: String,
-        @Field("tgl_surat_masuk") tglSuratMasuk: String,
+        @Part files: List<MultipartBody.Part>,
+        @Part("no_surat") noSurat: RequestBody,
+        @Part("id_instansi") idInstansi: RequestBody,
+        @Part("id_sifat") idSifat: RequestBody,
+        @Part("perihal") perihal: RequestBody,
+        @Part("tgl_surat_masuk") tglSuratMasuk: RequestBody,
+    ): ResultResponse
+
+    @Multipart
+    @POST("android/upload_file")
+    suspend fun upload(
+        @Part file: List<MultipartBody.Part>
     ): ResultResponse
 
     @FormUrlEncoded

@@ -1,21 +1,21 @@
-package com.daylantern.arsipsuratpembinaan
+package com.daylantern.arsipsuratpembinaan.fragments
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.daylantern.arsipsuratpembinaan.ApiService
+import com.daylantern.arsipsuratpembinaan.Constants
+import com.daylantern.arsipsuratpembinaan.R
 import com.daylantern.arsipsuratpembinaan.databinding.FragmentProfileBinding
+import com.daylantern.arsipsuratpembinaan.viewmodels.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -23,6 +23,7 @@ class ProfileFragment : Fragment() {
 
     private lateinit var navC: NavController
     lateinit var binding: FragmentProfileBinding
+    private val viewModel: ProfileViewModel by viewModels()
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -43,7 +44,9 @@ class ProfileFragment : Fragment() {
 
         navC = Navigation.findNavController(view)
 
-        getDataPegawai()
+//        getDataPegawai()
+        viewModel.fetchPegawaiLoggedIn(sharedPref.getInt(Constants.PREF_ID_PEGAWAI, 0))
+        observePegawai()
 
         binding.btnUbahDataDiri.setOnClickListener {
             navC.navigate(R.id.action_menu_profil_to_ubahDataDiriFragment)
@@ -65,6 +68,16 @@ class ProfileFragment : Fragment() {
                     navC.navigate(R.id.action_menu_profil_to_loginFragment)
                 }
                 .show()
+        }
+    }
+
+    private fun observePegawai(){
+        viewModel.pegawaiLoggedIn.observe(viewLifecycleOwner){
+            binding.apply {
+                tvNamaPegawai.text = it?.nama
+                tvNuptkPegawai.text = it?.nuptk
+                tvJabatanPegawai.text = it?.jabatan
+            }
         }
     }
 
