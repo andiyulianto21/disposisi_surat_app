@@ -49,7 +49,7 @@ class LoginFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.title = "Login"
         navC = Navigation.findNavController(view)
-        var isLogin = sharedPref.getBoolean("login", false)
+        val isLogin = sharedPref.getBoolean("login", false)
 
         if(isLogin){
             navC.navigate(R.id.action_loginFragment_to_menu_suratMasuk)
@@ -70,20 +70,23 @@ class LoginFragment : Fragment() {
             viewModel.login(nuptk, password)
         }
 
-        viewModel.errorMessage.observe(viewLifecycleOwner){
-            if(!it.isNullOrEmpty()){
-                Log.d("error", it)
-//                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+        if(viewModel.errorMessage.hasActiveObservers()){
+            viewModel.errorMessage.observe(viewLifecycleOwner){
+                if(!it.isNullOrEmpty()){
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun observeIsLoginSuccess(){
         viewModel.isSuccess.observe(viewLifecycleOwner){isSuccess ->
-            if(isSuccess){
-                navC.navigate(R.id.action_loginFragment_to_menu_suratMasuk)
-            }else{
-                Toast.makeText(requireContext(), "Login gagal", Toast.LENGTH_SHORT).show()
+            if(isSuccess != null){
+                if(isSuccess){
+                    navC.navigate(R.id.action_loginFragment_to_menu_suratMasuk)
+                }else{
+                    Toast.makeText(requireContext(), "Login gagal", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }

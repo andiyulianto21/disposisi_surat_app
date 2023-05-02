@@ -38,6 +38,7 @@ import com.daylantern.arsipsuratpembinaan.databinding.FragmentTambahSuratMasukBi
 import com.daylantern.arsipsuratpembinaan.models.FileSuratModel
 import com.daylantern.arsipsuratpembinaan.models.PilihData
 import com.daylantern.arsipsuratpembinaan.viewmodels.TambahSuratMasukViewModel
+import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
@@ -51,14 +52,14 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class TambahSuratMasukFragment : Fragment() {
-
+    
     private lateinit var binding: FragmentTambahSuratMasukBinding
     private lateinit var dialogInstansi: Dialog
     private lateinit var selectedInstansi: MutableList<PilihData>
-
+    
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
     private lateinit var cameraSelector: CameraSelector
-
+    
     private lateinit var previewFileAdapter: RvPreviewFileAdapter
     private lateinit var sifatArrayAdapter: ArrayAdapter<String>
     private val viewModel: TambahSuratMasukViewModel by viewModels()
@@ -68,10 +69,10 @@ class TambahSuratMasukFragment : Fragment() {
     private var listFile: MutableList<FileSuratModel> = mutableListOf()
     private lateinit var cameraProviderResult: ActivityResultLauncher<String>
     private lateinit var getImage: ActivityResultLauncher<String>
-
+    
     @Inject
     lateinit var apiService: ApiService
-
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,37 +82,43 @@ class TambahSuratMasukFragment : Fragment() {
         cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
         return binding.root
     }
-
+    
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        cameraProviderResult = registerForActivityResult(ActivityResultContracts.RequestPermission()){ permissionGranted->
-            if(permissionGranted){
-                navC.navigate(R.id.cameraFragment)
-            }else {
-                Snackbar.make(binding.root,"The camera permission is required", Snackbar.LENGTH_SHORT).show()
+        
+        cameraProviderResult =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
+                if (permissionGranted) {
+                    navC.navigate(R.id.cameraFragment)
+                } else {
+                    Snackbar.make(
+                        binding.root,
+                        "The camera permission is required",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
+                }
             }
-        }
-
+        
         getImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
                 val bitmap = context?.getBitmap(uri)
                 val file = createFileFromUri(uri, requireContext())
-                if(bitmap!= null && file != null){
+                if (bitmap != null && file != null) {
                     previewFileAdapter.addItem(FileSuratModel(bitmap, file))
                     binding.tvTotalFileTerpilih.text = "${listFile.size} Terpilih"
-                }else {
-                    Toast.makeText(requireContext(), "bitmap/file kosong", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "bitmap/file kosong", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
-
+        
         navC = Navigation.findNavController(view)
         viewModel.fetchInstansi()
         viewModel.fetchSifat()
         (activity as AppCompatActivity).supportActionBar?.title = "Tambah Surat Masuk"
-
+        
         calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH)
@@ -119,7 +126,7 @@ class TambahSuratMasukFragment : Fragment() {
         binding.inputTglSurat.setText("$day ${Constants.convertMonth(month)} $year")
         selectedInstansi = mutableListOf()
         dialogInstansi = Dialog(requireContext())
-
+        
         binding.apply {
             inputTglSurat.setOnClickListener {
                 showDatePicker(calendar)
@@ -132,43 +139,43 @@ class TambahSuratMasukFragment : Fragment() {
             }
             btnPilihFile.setOnClickListener {
                 choosePickImage()
-
+                
             }
             btnSimpanSuratMasuk.setOnClickListener {
                 showConfirmationDialog()
             }
         }
-
+        
         setDropdownInstansi()
         setDropdownSifat()
-
+        
         viewModel.message.observe(viewLifecycleOwner) { msg ->
             if (msg != null)
                 message = msg
         }
-
+        
         binding.optionInstansiPengirim.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position).toString()
             viewModel.changeValueInstansi(selectedItem)
         }
-
+        
         binding.optionSifatSurat.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position).toString()
             viewModel.changeValueSifat(selectedItem)
         }
         setupRVPreviewFile()
-
+        
         //hasil dari camera fragment
-        navC.currentBackStackEntry?.savedStateHandle?.getLiveData<File>(KEY_PHOTO)?.observe(viewLifecycleOwner){
-            val uri = Uri.fromFile(it)
-            val bitmap = context?.getBitmap(uri)
-            if (bitmap != null) {
-                previewFileAdapter.addItem(FileSuratModel(bitmap, it))
-                binding.tvTotalFileTerpilih.text = "${listFile.size} Terpilih"
-//                listFile.add(FileSuratModel(bitmap, it))
+        navC.currentBackStackEntry?.savedStateHandle?.getLiveData<File>(KEY_PHOTO)
+            ?.observe(viewLifecycleOwner) {
+                val uri = Uri.fromFile(it)
+                val bitmap = context?.getBitmap(uri)
+                if (bitmap != null) {
+                    previewFileAdapter.addItem(FileSuratModel(bitmap, it))
+                    binding.tvTotalFileTerpilih.text = "${listFile.size} Terpilih"
+                }
             }
-        }
-
+        
         previewFileAdapter.setOnItemClicked(object : RvPreviewFileAdapter.Listener {
             override fun onItemClicked(image: Bitmap) {
                 val dialog = Dialog(requireContext())
@@ -179,78 +186,90 @@ class TambahSuratMasukFragment : Fragment() {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
-                val imgPreview = dialog.findViewById<ImageView>(R.id.img_preview_file)
-                imgPreview.setImageBitmap(image)
                 dialog.show()
+                val imgPreview = dialog.findViewById<PhotoView>(R.id.img_preview_file)
+//                Glide.with(requireContext()).load(image).into(imgPreview)
+                imgPreview.setImageBitmap(image)
             }
-
+            
             @SuppressLint("SetTextI18n")
             override fun onItemRemoved() {
                 binding.tvTotalFileTerpilih.text = "${listFile.size} Terpilih"
             }
         })
+        
+        observeLoadingTambahSurat()
     }
-
+    
+    private fun observeLoadingTambahSurat() {
+        viewModel.isLoading.observe(viewLifecycleOwner){isLoading ->
+            binding.pbLoading.visibility = if(isLoading) View.VISIBLE else View.INVISIBLE
+            binding.tvLoading.visibility = if(isLoading) View.VISIBLE else View.INVISIBLE
+            binding.scrollTambahSuratMasuk.visibility = if(isLoading) View.GONE else View.VISIBLE
+            binding.btnSimpanSuratMasuk.visibility = if(isLoading) View.GONE else View.VISIBLE
+        }
+    }
+    
     private fun createFileFromUri(uri: Uri, context: Context): File? {
         val contentResolver = context.contentResolver
         val displayName = getFileName(uri, context)
         val mimeType = contentResolver.getType(uri)
         val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType)
         val filePath = context.getExternalFilesDir(null)?.absolutePath + "/" + displayName
-
+        
         var inputStream: InputStream? = null
         var outputStream: OutputStream? = null
-
+        
         try {
             inputStream = contentResolver.openInputStream(uri)
             outputStream = FileOutputStream(filePath)
-
+            
             if (inputStream == null) return null
-
+            
             val bufferSize = 1024
             val buffer = ByteArray(bufferSize)
-
+            
             var len = inputStream.read(buffer)
             while (len != -1) {
                 outputStream.write(buffer, 0, len)
                 len = inputStream.read(buffer)
             }
-
+            
             return File(filePath)
-
+            
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {
             inputStream?.close()
             outputStream?.close()
         }
-
+        
         return null
     }
-
-    fun getFileName(uri: Uri, context: Context): String {
+    
+    private fun getFileName(uri: Uri, context: Context): String {
         var name = ""
-
+        
         val cursor = context.contentResolver.query(uri, null, null, null, null)
-
+        
         cursor?.let {
             val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
             it.moveToFirst()
             name = it.getString(nameIndex)
             cursor.close()
         }
-
+        
         return name
     }
-
+    
     private fun choosePickImage() {
         val dialogPickImage = BottomSheetDialog(requireContext())
         dialogPickImage.setContentView(R.layout.dialog_pick_image)
         val cardCamera = dialogPickImage.findViewById<CardView>(R.id.card_camera)
         val cardGallery = dialogPickImage.findViewById<CardView>(R.id.card_gallery)
         dialogPickImage.show()
-
-        cardCamera?.setOnClickListener{
+        
+        cardCamera?.setOnClickListener {
             dialogPickImage.dismiss()
             cameraProviderResult.launch(android.Manifest.permission.CAMERA)
         }
@@ -259,30 +278,36 @@ class TambahSuratMasukFragment : Fragment() {
             getImage.launch("image/*")
         }
     }
-
-    private fun setupRVPreviewFile(){
-        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+    
+    private fun setupRVPreviewFile() {
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         previewFileAdapter = RvPreviewFileAdapter(listFile)
         binding.rvFileSurat.layoutManager = layoutManager
         binding.rvFileSurat.adapter = previewFileAdapter
     }
-
+    
     private fun Context.getBitmap(uri: Uri): Bitmap =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) ImageDecoder.decodeBitmap(ImageDecoder.createSource(this.contentResolver, uri))
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) ImageDecoder.decodeBitmap(
+            ImageDecoder.createSource(
+                this.contentResolver,
+                uri
+            )
+        )
         else MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
-
+    
     private fun setDropdownInstansi() {
         viewModel.dataInstansi.observe(viewLifecycleOwner) { list ->
             binding.optionInstansiPengirim.setAdapter(
                 ArrayAdapter(requireContext(), R.layout.dropdown_item, list.map { it.namaInstansi })
             )
         }
-
+        
         viewModel.selectedInstansi.observe(viewLifecycleOwner) { nama ->
             binding.optionInstansiPengirim.setText(nama, false)
         }
     }
-
+    
     private fun setDropdownSifat() {
         viewModel.dataSifat.observe(viewLifecycleOwner) { list ->
             sifatArrayAdapter =
@@ -291,12 +316,12 @@ class TambahSuratMasukFragment : Fragment() {
                 sifatArrayAdapter
             )
         }
-
+        
         viewModel.selectedSifat.observe(viewLifecycleOwner) { sifat ->
             binding.optionSifatSurat.setText(sifat, false);
         }
     }
-
+    
     private fun showBottomSheetDialog(message: String) {
         val bottomSheetDialog = BottomSheetDialog(requireContext())
         bottomSheetDialog.setContentView(R.layout.bottom_sheet_tambah_data)
@@ -307,8 +332,8 @@ class TambahSuratMasukFragment : Fragment() {
             bottomSheetDialog.findViewById<TextInputEditText>(R.id.input_tambah_data)
         val imgTambahData = bottomSheetDialog.findViewById<ImageView>(R.id.img_tambah_data)
         val imgError = bottomSheetDialog.findViewById<ImageView>(R.id.img_error_sign)
-
-
+        
+        
         tvTambahData?.text = message
         tilTambahData?.requestFocus()
         bottomSheetDialog.show()
@@ -331,7 +356,7 @@ class TambahSuratMasukFragment : Fragment() {
             }
         }
     }
-
+    
     private fun showConfirmationDialog() {
         val dialog = Dialog(requireContext())
         dialog.setContentView(R.layout.dialog_konfirmasi)
@@ -339,7 +364,7 @@ class TambahSuratMasukFragment : Fragment() {
         val btnKonfirmasiSimpan = dialog.findViewById<MaterialButton>(R.id.btn_konfirmasi_simpan)
         val tvDeskripsiKonfirmasi = dialog.findViewById<TextView>(R.id.tv_deskripsi_konfirmasi)
         val tvJudulKonfirmasi = dialog.findViewById<TextView>(R.id.tv_judul_konfirmasi)
-
+        
         dialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -351,14 +376,16 @@ class TambahSuratMasukFragment : Fragment() {
         btnKonfirmasiSimpan.text = "Simpan"
         tvDeskripsiKonfirmasi.text = resources.getText(R.string.desk_konfirmasi_tambah_suratmasuk)
         tvJudulKonfirmasi.text = resources.getText(R.string.judul_konfirmasi_tambah_suratmasuk)
-
+        
         dialog.show()
-
+        
         btnKonfirmasiSimpan.setOnClickListener {
             val noSurat = binding.inputNoSurat.text?.trim().toString()
             val perihal = binding.inputPerihal.text?.trim().toString()
-            val tglSurat = "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH) + 1}-${calendar.get(Calendar.DAY_OF_MONTH)}"
-
+            val tglSurat = "${calendar.get(Calendar.YEAR)}-${calendar.get(Calendar.MONTH) + 1}-${
+                calendar.get(Calendar.DAY_OF_MONTH)
+            }"
+            
             if (noSurat.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
@@ -378,12 +405,15 @@ class TambahSuratMasukFragment : Fragment() {
                 return@setOnClickListener
             }
             
-            if(listFile.isEmpty()){
-                Toast.makeText(requireContext(), "File surat masih kosong", Toast.LENGTH_SHORT).show()
+            if (listFile.isEmpty()) {
+                Toast.makeText(requireContext(), "File surat masih kosong", Toast.LENGTH_SHORT)
+                    .show()
                 dialog.cancel()
                 return@setOnClickListener
             }
-
+            
+            
+            
             viewModel.insertSurat(
                 noSurat,
                 perihal,
@@ -392,20 +422,24 @@ class TambahSuratMasukFragment : Fragment() {
             )
             viewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
                 if (isSuccess == true) {
-                    Toast.makeText(requireContext(), viewModel.message.value, Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), viewModel.message.value, Toast.LENGTH_LONG)
+                        .show()
                     dialog.dismiss()
                     navC.navigate(R.id.menu_suratMasuk)
                 } else {
                     dialog.cancel()
-                    Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+                    if (viewModel.message.value?.isNotEmpty() == true) {
+                        Toast.makeText(requireContext(), viewModel.message.value, Toast.LENGTH_LONG)
+                            .show()
+                    }
                 }
             }
         }
     }
-
+    
     @SuppressLint("SetTextI18n")
     private fun showDatePicker(calendar: Calendar) {
-
+        
         val dpd = DatePickerDialog(
             requireContext(),
             { datePicker, y, mm, dd ->
@@ -419,7 +453,7 @@ class TambahSuratMasukFragment : Fragment() {
         )
         dpd.datePicker.maxDate = System.currentTimeMillis() - 1000
         dpd.show()
-
+        
     }
-
+    
 }

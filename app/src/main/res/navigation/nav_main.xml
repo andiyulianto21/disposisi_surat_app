@@ -36,7 +36,11 @@
         android:id="@+id/menu_disposisi"
         android:name="com.daylantern.arsipsuratpembinaan.DisposisiFragment"
         android:label="fragment_disposisi"
-        tools:layout="@layout/fragment_disposisi" />
+        tools:layout="@layout/fragment_disposisi" >
+        <action
+            android:id="@+id/action_menu_disposisi_to_tambahDisposisiFragment"
+            app:destination="@id/tambahDisposisiFragment" />
+    </fragment>
     <fragment
         android:id="@+id/menu_suratMasuk"
         android:name="com.daylantern.arsipsuratpembinaan.fragments.SuratMasukFragment"

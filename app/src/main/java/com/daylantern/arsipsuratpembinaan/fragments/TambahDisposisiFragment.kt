@@ -183,7 +183,7 @@ class TambahDisposisiFragment : Fragment() {
     }
 
     private fun setupRvFile(data: SuratMasuk) {
-        adapterFile = RvFileSuratAdapter(data.fileSurat.map { it.replace("localhost", "10.0.2.2") })
+        adapterFile = RvFileSuratAdapter(data.fileSurat.map { it.replace("localhost", Constants.IP_ADDRESS) })
         binding.rvFileSurat.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvFileSurat.adapter = adapterFile
@@ -245,9 +245,12 @@ class TambahDisposisiFragment : Fragment() {
         rvPilihData = bottomSheet.findViewById(R.id.rv_pilih_data)
         imgSelesaiPilih = bottomSheet.findViewById(R.id.img_selesai_pilih)
         val imgBatalPilih = bottomSheet.findViewById<ImageView>(R.id.img_batal_pilih)
+        val tvTambahData = bottomSheet.findViewById<TextView>(R.id.tv_judul_tambah_data)
         tvDataKosong = bottomSheet.findViewById(R.id.tv_data_kosong)
         imgDataKosong = bottomSheet.findViewById(R.id.img_error_sign)
 
+        tvTambahData?.text = "Pilih Guru/Pegawai"
+        
         imgSelesaiPilih?.setOnClickListener {
             val listSelected = adapter.getSelectedItem().filter { it.isChecked }.map { it.title }
             viewModel.insertSelectedTujuan(listSelected)

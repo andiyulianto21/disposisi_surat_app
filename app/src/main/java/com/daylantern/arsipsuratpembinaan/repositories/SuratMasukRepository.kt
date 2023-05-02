@@ -65,5 +65,9 @@ class SuratMasukRepository @Inject constructor(private val apiService: ApiServic
     ): ResultResponse {
         return apiService.addDisposisi(idSuratMasuk, idDisposisi, catatanDisposisi, pihakTujuan)
     }
+    
+    suspend fun getDisposisi(): ResultListDataResponse<SuratMasuk> {
+        return apiService.getDisposisi()
+    }
 
 }

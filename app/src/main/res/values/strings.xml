@@ -8,6 +8,12 @@
     <string name="sifat_surat">Sifat Surat</string>
     <string name="perihal">Perihal</string>
     <string name="file_surat">File Surat</string>
+    <string name="keterangan_surat_masuk_dibuat">Surat masuk dibuat.</string>
+    <string name="keterangan_surat_masuk_diinput">Surat masuk telah diinput oleh tata usaha dan sedang menunggu untuk disposisi.</string>
+    <string name="keterangan_surat_masuk_terdisposisi">Surat telah terdisposisi.</string>
     <string name="desk_konfirmasi_tambah_suratmasuk">Apakah anda yakin ingin menyimpan data surat masuk ini?</string>
     <string name="judul_konfirmasi_tambah_suratmasuk">Konfirmasi Simpan Surat</string>
+    <string name="label_sifat_surat">Sifat Surat:</string>
+    <string name="label_dari_instansi">Dari Instansi:</string>
+    <string name="label_perihal">Perihal:</string>
 </resources>

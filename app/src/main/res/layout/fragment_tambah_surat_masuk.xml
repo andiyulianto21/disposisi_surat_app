@@ -4,10 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TambahSuratMasukFragment"
-    >
+    tools:context=".fragments.TambahSuratMasukFragment">
+
+    <ProgressBar
+        android:id="@+id/pb_loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Loading, Mohon Tunggu"
+        android:layout_marginTop="15dp"
+        android:visibility="invisible"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pb_loading"/>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_tambah_surat_masuk"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:overScrollMode="never"
@@ -128,10 +153,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:ellipsize="end"
                     android:hint="Pilih instansi"
                     android:inputType="none"
-                    android:maxLines="1" />
+                    android:maxLines="2" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -248,19 +272,17 @@
                     android:id="@+id/tv_total_file_terpilih"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
                     android:text="0 Terpilih"
-                    android:textSize="12sp"
-                    android:layout_marginEnd="15dp"/>
+                    android:textSize="12sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_pilih_file"
                     android:layout_width="wrap_content"
                     android:layout_height="45dp"
-                    android:text="pilih file"
+                    android:text="Pilih File"
                     android:textAllCaps="false"
-                    android:textSize="12sp"
-                    app:icon="@drawable/ic_baseline_add_24"
-                    app:iconSize="18sp" />
+                    android:textSize="12sp"/>
 
             </LinearLayout>
 
@@ -270,10 +292,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:overScrollMode="never"
-                tools:listitem="@layout/card_preview_file"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_file_surat"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_file_surat" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -284,12 +305,12 @@
         android:id="@+id/btn_simpan_surat_masuk"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="10dp"
+        android:text="Simpan"
         android:textSize="14sp"
-        android:text="Simpan"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

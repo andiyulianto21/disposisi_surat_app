@@ -69,6 +69,9 @@ interface ApiService {
 
     @GET("android/surat_masuk")
     suspend fun getSuratMasuk(): ResultListDataResponse<SuratMasuk>
+    
+    @GET("android/disposisi/")
+    suspend fun getDisposisi(): ResultListDataResponse<SuratMasuk>
 
 //    @FormUrlEncoded
 //    @POST("android/tambah_surat_masuk")

@@ -21,8 +21,8 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(private val pegawaiRepo: PegawaiRepository, private val sharedPref: SharedPreferences) :
     ViewModel() {
 
-    private val _isSuccess = MutableLiveData(false)
-    val isSuccess: LiveData<Boolean> get() = _isSuccess
+    private val _isSuccess = MutableLiveData<Boolean?>()
+    val isSuccess: LiveData<Boolean?> get() = _isSuccess
 
     private var _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
@@ -39,7 +39,7 @@ class LoginViewModel @Inject constructor(private val pegawaiRepo: PegawaiReposit
                         .putInt(Constants.PREF_ID_PEGAWAI, result.data.idPegawai)
                         .apply()
                     _isSuccess.value = true
-                    _errorMessage.value = ""
+                    _errorMessage.value = null
                 } else {
                     _errorMessage.value = result.messages
                     _isSuccess.value = false

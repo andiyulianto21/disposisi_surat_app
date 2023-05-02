@@ -49,23 +49,33 @@ class SuratMasukFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         (activity as AppCompatActivity).supportActionBar?.title = "Surat Masuk"
         navC = Navigation.findNavController(view)
+        
         viewModel.fetchSuratMasuk()
-
+        
+        refreshLayout()
         observeLoading()
-        observeRvSuratMasuk()
+        observeSuratMasuk()
 
         binding.fabTambahSurat.setOnClickListener {
             navC.navigate(R.id.action_menu_suratMasuk_to_tambahSuratMasukFragment)
         }
     }
-
-    private fun observeRvSuratMasuk() {
+    
+    private fun refreshLayout() {
+        binding.refreshSuratMasuk.apply {
+            setOnRefreshListener {
+                isRefreshing = false
+                viewModel.fetchSuratMasuk()
+            }
+        }
+    }
+    
+    private fun observeSuratMasuk() {
         viewModel.suratMasuk.observe(viewLifecycleOwner){list ->
             adapter = RvSuratMasukAdapter(list)
-            binding.rvSuratMasuk.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvSuratMasuk.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter.setOnClickListener {position ->
                 if (list[position].statusSurat == "MENUNGGU_DISPOSISI") {
                     val action =

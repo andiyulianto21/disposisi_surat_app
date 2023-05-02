@@ -13,7 +13,8 @@ import java.util.*
 
 object Constants {
 
-    const val BASE_URL = "http://10.0.2.2/arsipsuratskripsi/"
+    const val IP_ADDRESS = "192.168.1.13"
+    const val BASE_URL = "http://$IP_ADDRESS/arsipsuratskripsi/"
     const val SHARED_PREF_NAME = "arsip_surat"
     const val PREF_ID_PEGAWAI = "idPegawai_login"
     const val PREF_JABATAN = "jabatan_login"

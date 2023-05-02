@@ -40,8 +40,9 @@
         android:id="@+id/btn_ubah_data_diri"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ubah Data Diri"
         android:layout_marginBottom="16dp"
+        android:text="Ubah Data Diri"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_ubah_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -50,8 +51,9 @@
         android:id="@+id/btn_ubah_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ubah Password"
         android:layout_marginBottom="16dp"
+        android:text="Ubah Password"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btn_logout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

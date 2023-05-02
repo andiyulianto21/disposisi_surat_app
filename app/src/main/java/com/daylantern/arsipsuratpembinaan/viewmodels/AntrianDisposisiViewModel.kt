@@ -12,34 +12,32 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailSuratMasukViewModel @Inject constructor(private val suratMasukRepo: SuratMasukRepository) :
-    ViewModel() {
+class AntrianDisposisiViewModel @Inject constructor(private val suratMasukRepo: SuratMasukRepository): ViewModel() {
 
-    private var _dataSuratMasuk = MutableLiveData<SuratMasuk?>()
-    val dataSuratMasuk: LiveData<SuratMasuk?> get() = _dataSuratMasuk
+    private var _antrianDisposisi = MutableLiveData<List<SuratMasuk>>()
+    val antrianDisposisi: LiveData<List<SuratMasuk>> get() = _antrianDisposisi
 
-    private var _isLoading = MutableLiveData<Boolean?>()
-    val isLoading: LiveData<Boolean?> get() = _isLoading
+    private var _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     private var _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> get() = _errorMessage
 
-    fun fetchSuratMasuk(idSuratMasuk: Int) {
+    fun fetchAntrianDisposisi() {
         viewModelScope.launch {
+            _isLoading.value = true
             try {
-                _isLoading.value = true
-                val result = suratMasukRepo.getSuratMasukById(idSuratMasuk)
-                if (result.status == 200) {
-                    _dataSuratMasuk.value = result.data
-                    _errorMessage.value = null
-                    _isLoading.value = false
-                }else if(result.status == 404){
-                    _errorMessage.value = result.messages
-                    _isLoading.value = null
+                val result = suratMasukRepo.getDisposisi()
+                if(result.status == 200){
+                    _antrianDisposisi.postValue(result.data)
                 }
+                _isLoading.value = false
+                _errorMessage.value = null
             }catch (e: IOException) {
                 _errorMessage.value = "Gagal menemukan koneksi internet!\nPastikan Internet atau WI-FI anda nyala"
                 _isLoading.value = false
+            }catch (e: Exception){
+
             }
         }
     }

@@ -28,6 +28,9 @@ class TambahSuratMasukViewModel @Inject constructor(
     private val sifatRepo: SifatSuratRepository,
     private val suratMasukRepo: SuratMasukRepository
 ) : ViewModel() {
+    
+    private var _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     private val _dataInstansi = MutableLiveData<List<InstansiModel>>()
     val dataInstansi: LiveData<List<InstansiModel>> get() = _dataInstansi
@@ -36,8 +39,8 @@ class TambahSuratMasukViewModel @Inject constructor(
     val dataSifat: LiveData<List<SifatModel>> get() = _dataSifat
 
     private val _errorBottomSheet = MutableLiveData<String?>()
-
     val errorBottomSheet: LiveData<String?> get() = _errorBottomSheet
+    
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> get() = _message
 
@@ -79,6 +82,7 @@ class TambahSuratMasukViewModel @Inject constructor(
         }
         viewModelScope.launch {
             try {
+                _isLoading.value = true
                 _message.value = ""
                 val result = suratMasukRepo.addSuratMasuk(noSurat,
                     idInstansiParam = idInstansi,
@@ -94,8 +98,10 @@ class TambahSuratMasukViewModel @Inject constructor(
                     _message.value = result.message
                     _isSuccess.value = false
                 }
+                _isLoading.value = false
             }catch (e: Exception) {
                 Log.d("fail", "insertSurat failed: ${e.message}")
+                _isLoading.value = false
             }
         }
     }

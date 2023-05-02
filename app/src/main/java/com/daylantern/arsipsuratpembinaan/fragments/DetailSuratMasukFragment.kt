@@ -3,6 +3,7 @@ package com.daylantern.arsipsuratpembinaan.fragments
 import android.app.Dialog
 import android.app.DownloadManager
 import android.content.Context
+import android.content.DialogInterface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -26,6 +28,7 @@ import com.daylantern.arsipsuratpembinaan.adapters.RvFileSuratAdapter
 import com.daylantern.arsipsuratpembinaan.databinding.FragmentDetailSuratMasukBinding
 import com.daylantern.arsipsuratpembinaan.entities.SuratMasuk
 import com.daylantern.arsipsuratpembinaan.viewmodels.DetailSuratMasukViewModel
+import com.github.chrisbanes.photoview.PhotoView
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,7 +52,7 @@ class DetailSuratMasukFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navC = view.findNavController()
-        (activity as AppCompatActivity).supportActionBar?.title = "Detail Surat"
+        (activity as AppCompatActivity).supportActionBar?.title = "Detail Surat Masuk"
         viewModel.fetchSuratMasuk(args.idSuratMasuk)
 
         observeLoading()
@@ -81,7 +84,7 @@ class DetailSuratMasukFragment : Fragment() {
                     data.disposisiTujuan.forEach {
                         val chip = Chip(requireContext())
                         chip.text = it
-                        chip.setChipBackgroundColorResource(R.color.purple_200)
+                        chip.setChipBackgroundColorResource(R.color.teal_700)
                         chip.setTextColor(resources.getColor(R.color.white))
                         chipDisposisiTertuju.addView(chip)
                     }
@@ -95,11 +98,15 @@ class DetailSuratMasukFragment : Fragment() {
     }
 
     private fun observeLoading() {
-        viewModel.isLoading.observe(viewLifecycleOwner){isLoad->
-            if(isLoad){
-                binding.pbTambahDisposisi.visibility = View.VISIBLE
-            }else {
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoad ->
+            if (isLoad != null) {
+                binding.pbTambahDisposisi.visibility = if (isLoad) View.VISIBLE else View.GONE
+                binding.scrollTambahDisposisi.visibility = if (isLoad) View.GONE else View.VISIBLE
+                binding.btnSimpanSuratMasuk.visibility = if (isLoad) View.GONE else View.VISIBLE
+            } else {
                 binding.pbTambahDisposisi.visibility = View.GONE
+                binding.scrollTambahDisposisi.visibility = View.GONE
+                binding.btnSimpanSuratMasuk.visibility = View.GONE
             }
         }
     }
@@ -107,22 +114,30 @@ class DetailSuratMasukFragment : Fragment() {
     private fun observeErrorMessage() {
         viewModel.errorMessage.observe(viewLifecycleOwner){message ->
             if(!message.isNullOrEmpty()){
-                binding.tvErrorMessage.text = message
-                binding.imgErrorSign.visibility = View.VISIBLE
-                binding.tvErrorMessage.visibility = View.VISIBLE
-                binding.scrollTambahDisposisi.visibility = View.GONE
-                binding.btnSimpanSuratMasuk.visibility = View.GONE
+//                binding.scrollTambahDisposisi.visibility = View.GONE
+//                binding.btnSimpanSuratMasuk.visibility = View.GONE
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Terjadi Error")
+                    .setMessage(message)
+                    .setCancelable(false)
+                    .setPositiveButton("Kembali") { _, _ ->
+                        navC.popBackStack()
+                    }
+                    .show()
+//                binding.tvErrorMessage.text = message
+//                binding.imgErrorSign.visibility = View.VISIBLE
+//                binding.tvErrorMessage.visibility = View.VISIBLE
             }else {
-                binding.imgErrorSign.visibility = View.GONE
-                binding.tvErrorMessage.visibility = View.GONE
-                binding.scrollTambahDisposisi.visibility = View.VISIBLE
-                binding.btnSimpanSuratMasuk.visibility = View.VISIBLE
+//                binding.imgErrorSign.visibility = View.GONE
+//                binding.tvErrorMessage.visibility = View.GONE
+//                binding.scrollTambahDisposisi.visibility = View.VISIBLE
+//                binding.btnSimpanSuratMasuk.visibility = View.VISIBLE
             }
         }
     }
 
     private fun setupRvFile(data: SuratMasuk) {
-        adapterFile = RvFileSuratAdapter(data.fileSurat.map { it.replace("localhost", "10.0.2.2") })
+        adapterFile = RvFileSuratAdapter(data.fileSurat.map { it.replace("localhost", Constants.IP_ADDRESS) })
         binding.rvFileSurat.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvFileSurat.adapter = adapterFile
         adapterFile.setOnItemClicked(object: RvFileSuratAdapter.OnItemClickListener{
@@ -131,7 +146,7 @@ class DetailSuratMasukFragment : Fragment() {
                 dialog.setContentView(R.layout.dialog_preview_file)
                 dialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
                 dialog.show()
-                val imgFile = dialog.findViewById<ImageView>(R.id.img_preview_file)
+                val imgFile = dialog.findViewById<PhotoView>(R.id.img_preview_file)
                 Glide.with(requireContext()).load(linkFile).into(imgFile)
                 val imgDownload = dialog.findViewById<ImageView>(R.id.img_download_file)
                 imgDownload.setOnClickListener {
