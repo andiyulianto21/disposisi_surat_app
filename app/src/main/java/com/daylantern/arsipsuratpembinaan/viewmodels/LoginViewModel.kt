@@ -35,6 +35,7 @@ class LoginViewModel @Inject constructor(private val pegawaiRepo: PegawaiReposit
                     val editor = sharedPref.edit()
                     editor
                         .putBoolean("login", true)
+                        .putString(Constants.PREF_JABATAN, result.data.jabatan)
                         .putInt(Constants.PREF_ID_PEGAWAI, result.data.idPegawai)
                         .apply()
                     _isSuccess.value = true

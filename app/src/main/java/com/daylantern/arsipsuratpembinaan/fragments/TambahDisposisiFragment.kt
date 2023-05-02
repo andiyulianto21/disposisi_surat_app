@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Dialog
 import android.app.DownloadManager
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -38,6 +39,7 @@ import android.content.pm.PackageManager
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class TambahDisposisiFragment : Fragment() {
@@ -56,11 +58,18 @@ class TambahDisposisiFragment : Fragment() {
     private lateinit var adapterFile: RvFileSuratAdapter
     private var listChip: MutableList<Chip> = mutableListOf()
 
+    @Inject
+    lateinit var pref: SharedPreferences
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTambahDisposisiBinding.inflate(layoutInflater)
+        when(pref.getString(Constants.PREF_JABATAN, null)?.lowercase()){
+            "kepala sekolah" -> switchFeatureInput(true)
+            else -> switchFeatureInput(false)
+        }
         return binding.root
     }
 
@@ -68,7 +77,6 @@ class TambahDisposisiFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navC = Navigation.findNavController(view)
-        (activity as AppCompatActivity).supportActionBar?.title = "Disposisi"
 
         viewModel.fetchSuratMasuk(args.idSuratMasuk)
         viewModel.fetchPegawai()
@@ -81,6 +89,17 @@ class TambahDisposisiFragment : Fragment() {
         binding.btnPilihTujuanDisposisi.setOnClickListener { showBottomSheet() }
 
         binding.btnMelakukanDisposisi.setOnClickListener { saveDisposisi() }
+    }
+
+    private fun switchFeatureInput(isKepsek: Boolean) {
+        (activity as AppCompatActivity).supportActionBar?.title = if (isKepsek) "Disposisi Surat" else "Detail Surat Masuk"
+        binding.apply {
+            tilCatatanDisposisi.visibility = if (isKepsek) View.VISIBLE else View.GONE
+            tvLabelCatatanDisposisi.visibility = if (isKepsek) View.VISIBLE else View.GONE
+            tvLabelTujuan.visibility = if (isKepsek) View.VISIBLE else View.GONE
+            btnPilihTujuanDisposisi.visibility =if (isKepsek) View.VISIBLE else View.GONE
+            btnMelakukanDisposisi.visibility = if (isKepsek) View.VISIBLE else View.GONE
+        }
     }
 
     private fun observeSuratMasuk() {

@@ -15,7 +15,8 @@ object Constants {
 
     const val BASE_URL = "http://10.0.2.2/arsipsuratskripsi/"
     const val SHARED_PREF_NAME = "arsip_surat"
-    const val PREF_ID_PEGAWAI = "idPegawai"
+    const val PREF_ID_PEGAWAI = "idPegawai_login"
+    const val PREF_JABATAN = "jabatan_login"
     const val PERMISSION_REQ_CODE = 100
     const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
     const val KEY_PHOTO = "key_photo"
