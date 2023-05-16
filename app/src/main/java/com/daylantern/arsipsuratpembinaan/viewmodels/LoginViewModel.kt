@@ -12,40 +12,32 @@ import com.daylantern.arsipsuratpembinaan.Constants
 import com.daylantern.arsipsuratpembinaan.R
 import com.daylantern.arsipsuratpembinaan.entities.Pegawai
 import com.daylantern.arsipsuratpembinaan.entities.ResultDataResponse
+import com.daylantern.arsipsuratpembinaan.entities.ResultResponse
 import com.daylantern.arsipsuratpembinaan.repositories.PegawaiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewModel @Inject constructor(private val pegawaiRepo: PegawaiRepository, private val sharedPref: SharedPreferences) :
+class LoginViewModel @Inject constructor(private val pegawaiRepo: PegawaiRepository) :
     ViewModel() {
 
-    private val _isSuccess = MutableLiveData<Boolean?>()
-    val isSuccess: LiveData<Boolean?> get() = _isSuccess
+    private var _message = MutableLiveData<ResultDataResponse<Pegawai>?>()
+    val message: LiveData<ResultDataResponse<Pegawai>?> get() = _message
+    
+    private var _isLoading = MutableLiveData<Boolean?>()
+    val isLoading: LiveData<Boolean?> get() = _isLoading
 
-    private var _errorMessage = MutableLiveData<String?>()
-    val errorMessage: LiveData<String?> get() = _errorMessage
-
-    fun login(nuptk: String, password: String) {
+    fun login(nuptk: String, password: String, token: String) {
         viewModelScope.launch {
             try {
-                val result = pegawaiRepo.login(nuptk, password)
-                if (result.status == 200) {
-                    val editor = sharedPref.edit()
-                    editor
-                        .putBoolean("login", true)
-                        .putString(Constants.PREF_JABATAN, result.data.jabatan)
-                        .putInt(Constants.PREF_ID_PEGAWAI, result.data.idPegawai)
-                        .apply()
-                    _isSuccess.value = true
-                    _errorMessage.value = null
-                } else {
-                    _errorMessage.value = result.messages
-                    _isSuccess.value = false
-                }
+                _isLoading.value = true
+                val result = pegawaiRepo.login(nuptk, password, token)
+                _message.value = result
+                _isLoading.value = false
             }catch (e: Exception){
-                _errorMessage.value = e.message
+//                _message.value = e.message
+                _isLoading.value = false
             }
         }
     }

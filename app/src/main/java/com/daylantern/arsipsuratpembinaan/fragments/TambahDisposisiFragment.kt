@@ -85,9 +85,7 @@ class TambahDisposisiFragment : Fragment() {
         observeSuratMasuk()
         observePihakTujuan()
         observeIsDisposisiSuccess()
-
         binding.btnPilihTujuanDisposisi.setOnClickListener { showBottomSheet() }
-
         binding.btnMelakukanDisposisi.setOnClickListener { saveDisposisi() }
     }
 
@@ -107,14 +105,12 @@ class TambahDisposisiFragment : Fragment() {
             if (it != null) {
                 suratMasuk = it
                 setupRvFile(it)
-                val tglMasuk = Constants.convertDateStringToCalendar(it.tglSuratMasuk, true)
-                val tglDiterima = Constants.convertDateStringToCalendar(it.tglSuratDiterima, false)
                 binding.apply {
                     tvSifatSurat.text = it.sifatSurat
                     tvNoSurat.text = it.noSuratMasuk
                     tvPerihal.text = it.perihal
-                    tvTglSuratMasukDibuat.text = Constants.showDate(tglMasuk, true)
-                    tvTglSuratMasukDiterima.text = Constants.showDate(tglDiterima, false)
+                    tvTglSuratMasukDibuat.text = Constants.showDate(it.tglSuratMasuk, true)
+                    tvTglSuratMasukDiterima.text = Constants.showDate(it.tglSuratDiterima, false)
                     tvInstansiPengirim.text = it.instansiPengirim
                 }
             }
@@ -148,12 +144,17 @@ class TambahDisposisiFragment : Fragment() {
 
     private fun observeLoading(){
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoad ->
-            if(isLoad){
-                binding.pbTambahDisposisi.visibility = View.VISIBLE
+            if(isLoad != null){
+                binding.pbTambahDisposisi.visibility = if (isLoad) View.VISIBLE else View.GONE
+                binding.scrollTambahDisposisi.visibility = if (isLoad) View.GONE else View.VISIBLE
+//                binding.btnMelakukanDisposisi.visibility = if (isLoad) View.GONE else View.VISIBLE
             }else {
                 binding.pbTambahDisposisi.visibility = View.GONE
+                binding.scrollTambahDisposisi.visibility = View.GONE
+                binding.btnMelakukanDisposisi.visibility = View.GONE
             }
         }
+//        switchFeatureInput(pref.getString(Constants.PREF_JABATAN, "").equals("kepsek", true))
     }
 
     private fun saveDisposisi() {
@@ -199,6 +200,7 @@ class TambahDisposisiFragment : Fragment() {
                 imgDownload.setOnClickListener {
                     if(hasWriteExternalStoragePermission()){
                         downloadFile(linkFile)
+                        Toast.makeText(requireContext(), "Downloading", Toast.LENGTH_SHORT).show()
                     }else {
                         requestPermissions()
                     }
@@ -213,7 +215,7 @@ class TambahDisposisiFragment : Fragment() {
     ) == PackageManager.PERMISSION_GRANTED
 
     private fun requestPermissions(){
-        var permissionToRequest = mutableListOf<String>()
+        val permissionToRequest = mutableListOf<String>()
         if(!hasWriteExternalStoragePermission()){
             permissionToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
@@ -222,17 +224,15 @@ class TambahDisposisiFragment : Fragment() {
             ActivityCompat.requestPermissions(requireActivity(), permissionToRequest.toTypedArray(), 0)
         }
     }
-
-
+    
     private fun downloadFile(linkFile: String){
         try {
             val manager =
                 requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
             val uri = Uri.parse(linkFile)
             val request = DownloadManager.Request(uri)
-            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE or DownloadManager.Request.NETWORK_WIFI)
             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "${System.currentTimeMillis()}.jpg")
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_ONLY_COMPLETION)
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             manager.enqueue(request)
         } catch (e: Exception) {
             Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()

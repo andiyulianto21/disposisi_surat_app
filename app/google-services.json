@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "306428612162",
+    "project_id": "disposisi-surat-1911500052",
+    "storage_bucket": "disposisi-surat-1911500052.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306428612162:android:a078b0a717e134b20267db",
+        "android_client_info": {
+          "package_name": "com.daylantern.arsipsuratpembinaan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306428612162-kq3m173g7b90bh2smfrb4do3bet7hou0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYQsTGCQ8dURyVnJnT5ia4wfMb-SX_NFk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306428612162-kq3m173g7b90bh2smfrb4do3bet7hou0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

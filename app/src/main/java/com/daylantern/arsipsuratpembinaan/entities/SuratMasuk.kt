@@ -11,6 +11,7 @@ data class SuratMasuk(
     @SerializedName("tgl_disposisi") val tglDisposisi: String? = null,
     @SerializedName("instansi_pengirim") val instansiPengirim: String,
     @SerializedName("perihal") val perihal: String,
+    @SerializedName("lampiran") val lampiran: String,
     @SerializedName("sifat_surat") val sifatSurat: String,
     @SerializedName("status_surat") val statusSurat: String,
     @SerializedName("catatan_disposisi") val catatanDisposisi: String? = null,

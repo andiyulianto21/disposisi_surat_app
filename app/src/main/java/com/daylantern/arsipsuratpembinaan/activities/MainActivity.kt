@@ -34,6 +34,14 @@ class MainActivity : AppCompatActivity() {
         val controller = navHostFragment.navController
         binding.bottomNavView.setupWithNavController(controller)
 
+        controller.addOnDestinationChangedListener {_, destination, _ ->
+            if(destination.id == R.id.loginFragment){
+                (this as AppCompatActivity).supportActionBar?.hide()
+            }else {
+                (this as AppCompatActivity).supportActionBar?.show()
+            }
+        }
+        
         controller.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.ubahDataDiriFragment
                 || destination.id == R.id.gantiPasswordFragment
@@ -42,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 || destination.id == R.id.detailSuratMasukFragment
                 || destination.id == R.id.tambahDisposisiFragment
                 || destination.id == R.id.cameraFragment
+                || destination.id == R.id.instansiFragment
             ) {
                 binding.bottomNavView.visibility = View.GONE
             } else {

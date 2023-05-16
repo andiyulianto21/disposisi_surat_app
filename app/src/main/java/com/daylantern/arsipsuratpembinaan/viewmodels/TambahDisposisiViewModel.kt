@@ -34,8 +34,8 @@ class TambahDisposisiViewModel @Inject constructor(
     private val _isSuccess = MutableLiveData(false)
     val isSuccess: LiveData<Boolean> get() = _isSuccess
 
-    private var _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> get() = _isLoading
+    private var _isLoading = MutableLiveData<Boolean?>()
+    val isLoading: LiveData<Boolean?> get() = _isLoading
 
     fun getIdPegawai(name: String): Int?{
         return _listPegawai.value?.find { it.title == name }?.id
@@ -57,7 +57,7 @@ class TambahDisposisiViewModel @Inject constructor(
                     pihakTujuan
                 )
                 if (result.status == 200) {
-                    _message.value = result.message
+                    _message.value = result.messages
                     _isSuccess.value = true
                 }
                 _isSuccess.value = false
@@ -75,10 +75,11 @@ class TambahDisposisiViewModel @Inject constructor(
                 val result = suratMasukRepo.getSuratMasukById(idSurat)
                 if (result.status == 200) {
                     _suratMasuk.postValue(result.data)
-                }else if(result.status == 404){
+                    _isLoading.value = false
+                }else {
 //                    _errorMessage.value = result.messages
+                    _isLoading.value = null
                 }
-                _isLoading.value = false
             } catch (e: IOException) {
                 _isLoading.value = false
             }

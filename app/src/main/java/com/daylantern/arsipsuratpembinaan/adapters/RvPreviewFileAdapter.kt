@@ -36,7 +36,11 @@ class RvPreviewFileAdapter(private val items: MutableList<FileSuratModel>):
         items.removeAt(position)
         notifyDataSetChanged()
     }
-
+    
+    fun size(): Int{
+        return items.size
+    }
+    
     fun getAll(): List<FileSuratModel> {
         return items.toList()
     }

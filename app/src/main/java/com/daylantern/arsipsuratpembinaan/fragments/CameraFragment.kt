@@ -78,8 +78,6 @@ class CameraFragment : Fragment() {
                 val savedUri = Uri.fromFile(photoFile)
                 val msg = "Berhasil mengambil foto!"
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_LONG).show()
-//                Log.d("camera", msg)
-//                navC.previousBackStackEntry?.savedStateHandle?.set(KEY_PHOTO, savedUri.toString())
                 navC.previousBackStackEntry?.savedStateHandle?.set(KEY_PHOTO, photoFile)
                 navC.popBackStack()
             }
@@ -91,18 +89,14 @@ class CameraFragment : Fragment() {
     }
 
     private fun startCamera() {
-        // listening for data from the camera
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
             imageCapture = ImageCapture.Builder().build()
-            // connecting a preview use case to the preview in the xml file.
             val preview = Preview.Builder().build().also{
                 it.setSurfaceProvider(binding.previewCamera.surfaceProvider)
             }
             try{
-                // clear all the previous use cases first.
                 cameraProvider.unbindAll()
-                // binding the lifecycle of the camera to the lifecycle of the application.
                 cameraProvider.bindToLifecycle(viewLifecycleOwner,cameraSelector,imageCapture,preview)
             } catch (e: Exception) {
                 Log.d("camera", "Use case binding failed", e)

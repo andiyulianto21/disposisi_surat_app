@@ -1,25 +1,21 @@
 package com.daylantern.arsipsuratpembinaan.viewmodels
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.daylantern.arsipsuratpembinaan.models.FileSuratModel
-import com.daylantern.arsipsuratpembinaan.models.InstansiModel
+import com.daylantern.arsipsuratpembinaan.entities.Instansi
 import com.daylantern.arsipsuratpembinaan.models.SifatModel
 import com.daylantern.arsipsuratpembinaan.repositories.InstansiRepository
 import com.daylantern.arsipsuratpembinaan.repositories.SifatSuratRepository
 import com.daylantern.arsipsuratpembinaan.repositories.SuratMasukRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,8 +28,8 @@ class TambahSuratMasukViewModel @Inject constructor(
     private var _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _dataInstansi = MutableLiveData<List<InstansiModel>>()
-    val dataInstansi: LiveData<List<InstansiModel>> get() = _dataInstansi
+    private val _dataInstansi = MutableLiveData<List<Instansi>>()
+    val dataInstansi: LiveData<List<Instansi>> get() = _dataInstansi
 
     private val _dataSifat = MutableLiveData<List<SifatModel>>()
     val dataSifat: LiveData<List<SifatModel>> get() = _dataSifat
@@ -92,10 +88,10 @@ class TambahSuratMasukViewModel @Inject constructor(
                     listFile = files
                 )
                 if(result.status == 200){
-                    _message.value = result.message
+                    _message.value = result.messages
                     _isSuccess.value = true
                 }else {
-                    _message.value = result.message
+                    _message.value = result.messages
                     _isSuccess.value = false
                 }
                 _isLoading.value = false
@@ -114,7 +110,7 @@ class TambahSuratMasukViewModel @Inject constructor(
         _selectedSifat.value = selected
     }
 
-    private fun getIdInstansiSelected(list: List<InstansiModel>?): String?{
+    private fun getIdInstansiSelected(list: List<Instansi>?): String?{
         if (list != null) {
             for (item in list)
                 if(item.namaInstansi == _selectedInstansi.value)
@@ -135,7 +131,8 @@ class TambahSuratMasukViewModel @Inject constructor(
     fun fetchInstansi() {
         viewModelScope.launch {
             try {
-                _dataInstansi.postValue(instansiRepo.getInstansi())
+                val result = instansiRepo.getInstansi()
+                _dataInstansi.postValue(result.data ?: listOf())
             }catch (e: Exception) {
 
             }
@@ -152,20 +149,14 @@ class TambahSuratMasukViewModel @Inject constructor(
         }
     }
 
-    fun insertInstansi(nama: String, alamat: String) {
-        if (nama.isEmpty()) {
-            _errorBottomSheet.value = "Form data belum diisi!"
-            return
-        }
+    fun addInstansi(nama: String, alamat: String) {
         viewModelScope.launch {
             val result = instansiRepo.addInstansi(nama, alamat)
             when (result.status) {
                 200 -> {
                     val data = result.data
                     _dataInstansi.value = _dataInstansi.value?.plus(data)
-
                     _selectedInstansi.value = data.namaInstansi
-
                     _errorBottomSheet.value = null
                 }
                 400 -> {

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_label_judul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Laporan Surat Masuk"
+        android:layout_marginTop="30px"
+        android:textColor="@color/black"
+        android:textSize="20px"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tgl_dari_sampai"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dari: ...\nSampai: ..."
+        android:textSize="10px"
+        android:layout_marginTop="30px"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/tv_label_judul"
+        app:layout_constraintStart_toEndOf="@id/guideline"/>
+
+    <ImageView
+        android:id="@+id/line_header_top"
+        android:layout_width="0dp"
+        android:layout_height=".25dp"
+        android:layout_marginTop="15px"
+        android:background="@color/black"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/tv_tgl_dari_sampai"
+        android:importantForAccessibility="no" />
+
+    <ImageView
+        android:id="@+id/line_header_bottom"
+        android:layout_width="0dp"
+        android:layout_height=".25dp"
+        android:layout_marginTop="5px"
+        android:background="@color/black"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toBottomOf="@id/layout_label_tabel"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_label_tabel"
+        android:layout_width="0dp"
+        android:layout_marginTop="5px"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/line_header_top">
+
+        <TextView
+            android:id="@+id/tv_no"
+            android:layout_width="15dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="No"
+            android:textColor="@color/black"
+            android:textSize="12px"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_no_surat"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_no_surat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="No Surat"
+            android:textColor="@color/black"
+            android:textSize="12px"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_tgl_surat_masuk"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_no"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_tgl_surat_masuk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tgl Masuk"
+            android:textColor="@color/black"
+            android:textSize="12px"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_tgl_surat_diterima"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_no_surat"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_tgl_surat_diterima"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Tgl Diterima"
+            android:textColor="@color/black"
+            android:textSize="12px"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_instansi_pengirim"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_tgl_surat_masuk"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_instansi_pengirim"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Pengirim"
+            android:textColor="@color/black"
+            android:textSize="12px"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_perihal"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_tgl_surat_diterima"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_perihal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="Perihal"
+            android:textColor="@color/black"
+            android:textSize="12px"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tv_lampiran"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_instansi_pengirim"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_lampiran"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Lampiran"
+            android:textColor="@color/black"
+            android:textSize="12px"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_perihal"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tabel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        app:layout_constraintEnd_toStartOf="@id/guideline2"
+        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/line_header_bottom"
+        tools:listitem="@layout/rv_laporan_surat_masuk" />
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".95" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

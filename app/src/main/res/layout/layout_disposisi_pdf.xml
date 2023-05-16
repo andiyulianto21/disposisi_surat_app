@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="PxUsage">
+
+    <TextView
+        android:id="@+id/pdf_judul_disposisi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lembar Disposisi"
+        android:textColor="@color/black"
+        android:textSize="18.6px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/pdf_label_no_surat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32px"
+        android:text="No Surat"
+        android:textSize="10px"
+        app:layout_constraintEnd_toEndOf="@+id/pdf_label_instansi_pengirim"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/pdf_judul_disposisi" />
+
+    <TextView
+        android:id="@+id/pdf_end_label_no_surat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:layout_marginStart="5px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintStart_toEndOf="@id/pdf_label_no_surat"
+        app:layout_constraintBottom_toBottomOf="@+id/pdf_label_no_surat"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_no_surat" />
+
+    <TextView
+        android:id="@+id/tv_no_surat_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toEndOf="@+id/pdf_end_label_no_surat"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_no_surat"
+        tools:text="TES/ABC/01/2023" />
+
+    <TextView
+        android:id="@+id/pdf_tgl_diterima_surat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:text="Tanggal Diterima"
+        android:textSize="10px"
+        app:layout_constraintEnd_toEndOf="@+id/pdf_label_tgl_disposisi"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tgl_surat_pdf" />
+
+    <TextView
+        android:id="@+id/pdf_end_label_tgl_diterima_surat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5px"
+        android:text=":"
+        android:textSize="10px"
+        app:layout_constraintBottom_toBottomOf="@+id/pdf_tgl_diterima_surat"
+        app:layout_constraintStart_toEndOf="@id/pdf_tgl_diterima_surat"
+        app:layout_constraintTop_toTopOf="@+id/pdf_tgl_diterima_surat" />
+
+    <TextView
+        android:id="@+id/tv_tgl_diterima_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15px"
+        android:text="23 April 2023"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toEndOf="@+id/pdf_end_label_tgl_diterima_surat"
+        app:layout_constraintTop_toTopOf="@+id/pdf_tgl_diterima_surat" />
+
+    <TextView
+        android:id="@+id/pdf_label_instansi_pengirim"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:text="Instansi Pengirim"
+        android:textSize="10px"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/pdf_label_no_surat" />
+
+    <TextView
+        android:id="@+id/pdf_end_label_instansi_pengirim"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:layout_marginStart="5px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintStart_toEndOf="@id/pdf_label_instansi_pengirim"
+        app:layout_constraintBottom_toBottomOf="@+id/pdf_label_instansi_pengirim"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_instansi_pengirim" />
+
+    <TextView
+        android:id="@+id/tv_instansi_pengirim_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toEndOf="@+id/pdf_end_label_instansi_pengirim"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_instansi_pengirim"
+        tools:text="TES/ABC/01/2023" />
+
+    <TextView
+        android:id="@+id/pdf_label_tgl_surat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Tanggal Surat"
+        android:textSize="10px"
+        app:layout_constraintBottom_toBottomOf="@+id/pdf_label_no_surat"
+        app:layout_constraintEnd_toEndOf="@+id/pdf_label_tgl_disposisi"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_no_surat" />
+
+    <TextView
+        android:id="@+id/pdf_end_label_tgl_surat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:layout_marginStart="5px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintStart_toEndOf="@id/pdf_label_tgl_disposisi"
+        app:layout_constraintBottom_toBottomOf="@+id/pdf_label_no_surat"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_no_surat" />
+
+    <TextView
+        android:id="@+id/tv_tgl_surat_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15px"
+        android:text="21 April 2023"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toEndOf="@+id/pdf_end_label_tgl_surat"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_tgl_surat" />
+
+    <TextView
+        android:id="@+id/pdf_label_perihal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:text="Perihal"
+        android:textSize="10px"
+        app:layout_constraintEnd_toEndOf="@+id/pdf_label_instansi_pengirim"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@id/pdf_label_instansi_pengirim" />
+
+    <TextView
+        android:id="@+id/pdf_end_label_perihal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:layout_marginStart="5px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintStart_toEndOf="@id/pdf_label_perihal"
+        app:layout_constraintBottom_toBottomOf="@+id/pdf_label_perihal"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_perihal" />
+
+    <TextView
+        android:id="@+id/tv_perihal_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toEndOf="@+id/pdf_end_label_perihal"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_perihal"
+        tools:text="TES/ABC/01/2023" />
+
+    <TextView
+        android:id="@+id/pdf_label_tgl_disposisi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:text="Tanggal Disposisi"
+        android:textSize="10px"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tv_tgl_diterima_pdf" />
+
+    <TextView
+        android:id="@+id/pdf_end_label_tgl_disposisi"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:layout_marginStart="5px"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintStart_toEndOf="@id/pdf_label_tgl_disposisi"
+        app:layout_constraintBottom_toBottomOf="@+id/pdf_label_tgl_disposisi"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_tgl_disposisi" />
+
+    <TextView
+        android:id="@+id/tv_tgl_disposisi_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15px"
+        android:text="21 April 2023"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toEndOf="@+id/pdf_end_label_tgl_disposisi"
+        app:layout_constraintTop_toTopOf="@+id/pdf_label_tgl_disposisi" />
+
+    <ImageView
+        android:id="@+id/pdf_line"
+        android:layout_width="0dp"
+        android:layout_height=".5px"
+        android:background="@color/black"
+        android:layout_marginTop="25px"
+        app:layout_constraintStart_toStartOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="@id/guideline6"
+        app:layout_constraintTop_toBottomOf="@id/pdf_label_perihal"/>
+
+    <TextView
+        android:id="@+id/pdf_label_catatan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25px"
+        android:text="Catatan / Isi Disposisi :"
+        android:textSize="10px"
+        app:layout_constraintStart_toStartOf="@+id/guideline4"
+        app:layout_constraintTop_toBottomOf="@+id/pdf_line" />
+
+    <TextView
+        android:id="@+id/tv_catatan_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:text="Lorem ipsum dolor ipmet..."
+        android:textColor="@color/black"
+        android:textSize="13px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline6"
+        app:layout_constraintStart_toStartOf="@+id/pdf_label_catatan"
+        app:layout_constraintTop_toBottomOf="@+id/pdf_label_catatan" />
+
+    <TextView
+        android:id="@+id/pdf_label_tujuan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25px"
+        android:text="Diteruskan Kepada :"
+        android:textSize="10px"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/pdf_line" />
+
+    <TextView
+        android:id="@+id/tv_tujuan_pdf"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10px"
+        android:text="1. Andi\n2. Cindy\n3. Toni"
+        android:textColor="@color/black"
+        android:lineSpacingExtra="2px"
+        android:textSize="13px"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/pdf_label_tujuan" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".18" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".48" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".53" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".66" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent=".95" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

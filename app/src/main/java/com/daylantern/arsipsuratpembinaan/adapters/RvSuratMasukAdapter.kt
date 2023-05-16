@@ -32,13 +32,12 @@ class RvSuratMasukAdapter(val list: List<SuratMasuk>): RecyclerView.Adapter<RvSu
         holder.itemView.setOnClickListener{
             listener?.invoke(position)
         }
-        val calendar = Constants.convertDateStringToCalendar(list[position].tglSuratDiterima, false)
         holder.binding.apply {
             tvSifatSurat.text = list[position].sifatSurat
             tvNoSurat.text = list[position].noSuratMasuk
             tvPerihal.text = list[position].perihal
             tvInstansiPengirim.text = list[position].instansiPengirim
-            tvTglSurat.text = Constants.showDate(calendar, false)
+            tvTglSurat.text = Constants.showDate(list[position].tglSuratDiterima, false)
             if(list[position].statusSurat == "MENUNGGU_DISPOSISI"){
                 imgStatusSurat.setBackgroundColor(context.resources.getColor(R.color.purple_700))
             }else {

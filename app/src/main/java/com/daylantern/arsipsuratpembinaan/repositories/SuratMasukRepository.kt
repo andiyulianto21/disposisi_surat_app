@@ -14,11 +14,19 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.http.Field
 import java.io.File
 import javax.inject.Inject
 
 class SuratMasukRepository @Inject constructor(private val apiService: ApiService) {
-
+    
+    suspend fun getLaporanSuratMasuk(
+        dariTgl: String,
+        sampaiTgl: String,
+    ): ResultListDataResponse<SuratMasuk>{
+        return apiService.getLaporanSuratMasuk(dariTgl, sampaiTgl)
+    }
+    
     suspend fun addSuratMasuk(
         noSuratParam: String,
         idInstansiParam: String,

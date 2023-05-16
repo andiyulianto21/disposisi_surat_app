@@ -16,6 +16,7 @@ import com.daylantern.arsipsuratpembinaan.*
 import com.daylantern.arsipsuratpembinaan.databinding.FragmentLoginBinding
 import com.daylantern.arsipsuratpembinaan.viewmodels.LoginViewModel
 import com.daylantern.arsipsuratpembinaan.viewmodels.ProfileViewModel
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,47 +48,61 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "Login"
+        (activity as AppCompatActivity).supportActionBar?.hide()
         navC = Navigation.findNavController(view)
         val isLogin = sharedPref.getBoolean("login", false)
 
         if(isLogin){
             navC.navigate(R.id.action_loginFragment_to_menu_suratMasuk)
         }
-        observeIsLoginSuccess()
 
         binding.btnLogin.setOnClickListener {
-            val nuptk = binding.inputNuptkLogin.text.toString()
+            val nuptk = binding.inputNip.text.toString()
             val password = binding.inputPasswordLogin.text.toString()
             if(nuptk == ""){
-                binding.inputNuptkLogin.error = "Email anda masih kosong"
+                binding.inputNip.error = "NIP masih kosong, silahkan isi"
                 return@setOnClickListener
             }
             if(password == ""){
-                binding.inputPasswordLogin.error = "Password anda masih kosong"
+                binding.inputPasswordLogin.error = "Password masih kosong, silahkan isi"
                 return@setOnClickListener
             }
-            viewModel.login(nuptk, password)
+            
+            FirebaseMessaging.getInstance().token.addOnSuccessListener {
+                viewModel.login(nuptk, password, it)
+                
+            }
         }
-
-        if(viewModel.errorMessage.hasActiveObservers()){
-            viewModel.errorMessage.observe(viewLifecycleOwner){
-                if(!it.isNullOrEmpty()){
-                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
-                }
+        
+        observeLoading()
+        observeMessage()
+    
+        
+    }
+    
+    private fun observeMessage() {
+        viewModel.message.observe(viewLifecycleOwner){response ->
+            if(response == null)
+                return@observe
+            if(response.status == 200){
+                navC.navigate(R.id.action_loginFragment_to_menu_suratMasuk)
+                sharedPref.edit()
+                    .putBoolean("login", true)
+                    .putString(Constants.PREF_JABATAN, response.data.jabatan)
+                    .putInt(Constants.PREF_ID_PEGAWAI, response.data.idPegawai)
+                    .apply()
+                Constants.toastSuccess(requireContext(), response.messages!!)
+            }else {
+                Constants.toastWarning(requireContext(), response.messages!!)
             }
         }
     }
-
-    private fun observeIsLoginSuccess(){
-        viewModel.isSuccess.observe(viewLifecycleOwner){isSuccess ->
-            if(isSuccess != null){
-                if(isSuccess){
-                    navC.navigate(R.id.action_loginFragment_to_menu_suratMasuk)
-                }else{
-                    Toast.makeText(requireContext(), "Login gagal", Toast.LENGTH_SHORT).show()
-                }
-            }
+    
+    private fun observeLoading() {
+        viewModel.isLoading.observe(viewLifecycleOwner){isLoading ->
+            if(isLoading == null)
+                return@observe
+            binding.pbLoading.visibility = if(isLoading) View.VISIBLE else View.GONE
         }
     }
 }

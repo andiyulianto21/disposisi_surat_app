@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="150px">
+
+    <TextView
+        android:id="@+id/tv_no"
+        android:layout_width="15dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="No"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintEnd_toStartOf="@+id/tv_no_surat"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_no_surat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="no_surat"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintEnd_toStartOf="@+id/tv_tgl_surat_masuk"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_no"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tgl_surat_masuk"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="tgl_surat_masuk"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintEnd_toStartOf="@+id/tv_tgl_surat_diterima"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_no_surat"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_tgl_surat_diterima"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="tgl_surat_diterima"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintEnd_toStartOf="@+id/tv_instansi_pengirim"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_tgl_surat_masuk"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_instansi_pengirim"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="instansi_pengirim"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintEnd_toStartOf="@+id/tv_perihal"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_tgl_surat_diterima"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_perihal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:gravity="center"
+        android:text="perihal"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintEnd_toStartOf="@+id/tv_lampiran"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_instansi_pengirim"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_lampiran"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="lampiran"
+        android:textColor="@color/black"
+        android:textSize="10px"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_perihal"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

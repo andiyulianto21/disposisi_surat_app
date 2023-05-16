@@ -16,7 +16,7 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/menu_profil"
+        android:id="@+id/menu_profile"
         android:name="com.daylantern.arsipsuratpembinaan.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
@@ -31,6 +31,9 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_menu_profile_to_instansiFragment"
+            app:destination="@id/instansiFragment" />
     </fragment>
     <fragment
         android:id="@+id/menu_disposisi"
@@ -104,4 +107,9 @@
         android:name="com.daylantern.arsipsuratpembinaan.fragments.CameraFragment"
         android:label="fragment_camera"
         tools:layout="@layout/fragment_camera" />
+    <fragment
+        android:id="@+id/instansiFragment"
+        android:name="com.daylantern.arsipsuratpembinaan.fragments.InstansiFragment"
+        android:label="fragment_instansi"
+        tools:layout="@layout/fragment_instansi" />
 </navigation>

@@ -16,4 +16,5 @@
     <string name="label_sifat_surat">Sifat Surat:</string>
     <string name="label_dari_instansi">Dari Instansi:</string>
     <string name="label_perihal">Perihal:</string>
+    <string name="label_lampiran">Lampiran:</string>
 </resources>

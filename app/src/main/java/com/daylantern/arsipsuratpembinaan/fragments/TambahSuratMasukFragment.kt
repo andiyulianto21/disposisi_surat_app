@@ -20,6 +20,7 @@ import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -34,6 +35,7 @@ import com.daylantern.arsipsuratpembinaan.Constants
 import com.daylantern.arsipsuratpembinaan.Constants.KEY_PHOTO
 import com.daylantern.arsipsuratpembinaan.R
 import com.daylantern.arsipsuratpembinaan.adapters.RvPreviewFileAdapter
+import com.daylantern.arsipsuratpembinaan.databinding.BottomSheetInstansiBinding
 import com.daylantern.arsipsuratpembinaan.databinding.FragmentTambahSuratMasukBinding
 import com.daylantern.arsipsuratpembinaan.models.FileSuratModel
 import com.daylantern.arsipsuratpembinaan.models.PilihData
@@ -45,6 +47,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.common.util.concurrent.ListenableFuture
+import com.uk.tastytoasty.TastyToasty
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 import java.util.*
@@ -86,7 +89,15 @@ class TambahSuratMasukFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = "Tambah Surat Masuk"
+        navC = Navigation.findNavController(view)
+        viewModel.fetchInstansi()
+        viewModel.fetchSifat()
+        setDropdownInstansi()
+        setDropdownSifat()
+        setupRVPreviewFile()
         
+        //izin kamera
         cameraProviderResult =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) { permissionGranted ->
                 if (permissionGranted) {
@@ -94,36 +105,47 @@ class TambahSuratMasukFragment : Fragment() {
                 } else {
                     Snackbar.make(
                         binding.root,
-                        "The camera permission is required",
+                        "Dibutuhkan izin kamera untuk menggunakan fitur ini",
                         Snackbar.LENGTH_SHORT
-                    ).show()
+                    ).setBackgroundTint(resources.getColor(R.color.red_warning)).show()
                 }
             }
         
+        //hasil dari camera fragment
+        navC.currentBackStackEntry?.savedStateHandle?.getLiveData<File>(KEY_PHOTO)
+            ?.observe(viewLifecycleOwner) {
+                val uri = Uri.fromFile(it)
+                val bitmap = context?.getBitmap(uri)
+                if (bitmap != null) {
+                    previewFileAdapter.addItem(FileSuratModel(bitmap, it))
+                }
+                binding.tvTotalFileTerpilih.text = "${previewFileAdapter.size()} Terpilih"
+            }
+        
+        //hasil dari gallery
         getImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             if (uri != null) {
                 val bitmap = context?.getBitmap(uri)
                 val file = createFileFromUri(uri, requireContext())
                 if (bitmap != null && file != null) {
                     previewFileAdapter.addItem(FileSuratModel(bitmap, file))
-                    binding.tvTotalFileTerpilih.text = "${listFile.size} Terpilih"
+                    binding.tvTotalFileTerpilih.text = "${previewFileAdapter.size()} Terpilih"
                 } else {
-                    Toast.makeText(requireContext(), "bitmap/file kosong", Toast.LENGTH_SHORT)
-                        .show()
+                    Snackbar.make(
+                        binding.root,
+                        "File tidak bisa ditemukan/kosong",
+                        Snackbar.LENGTH_SHORT
+                    ).setBackgroundTint(resources.getColor(R.color.red_warning)).show()
                 }
             }
         }
-        
-        navC = Navigation.findNavController(view)
-        viewModel.fetchInstansi()
-        viewModel.fetchSifat()
-        (activity as AppCompatActivity).supportActionBar?.title = "Tambah Surat Masuk"
         
         calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)
         binding.inputTglSurat.setText("$day ${Constants.convertMonth(month)} $year")
+        
         selectedInstansi = mutableListOf()
         dialogInstansi = Dialog(requireContext())
         
@@ -132,7 +154,8 @@ class TambahSuratMasukFragment : Fragment() {
                 showDatePicker(calendar)
             }
             btnTambahInstansiPengirim.setOnClickListener {
-                showBottomSheetDialog("Tambah Instansi Baru")
+                showBottomSheetInstansi()
+//                showBottomSheetDialog("Tambah Instansi Baru")
             }
             btnTambahSifatSurat.setOnClickListener {
                 showBottomSheetDialog("Tambah Sifat Surat Baru")
@@ -145,14 +168,10 @@ class TambahSuratMasukFragment : Fragment() {
                 showConfirmationDialog()
             }
         }
-        
-        setDropdownInstansi()
-        setDropdownSifat()
-        
-        viewModel.message.observe(viewLifecycleOwner) { msg ->
-            if (msg != null)
-                message = msg
-        }
+        previewFileListener()
+        observeLoadingTambahSurat()
+        observeErrorMessage()
+        observeErrorMessageBottomSheet()
         
         binding.optionInstansiPengirim.setOnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position).toString()
@@ -163,19 +182,65 @@ class TambahSuratMasukFragment : Fragment() {
             val selectedItem = parent.getItemAtPosition(position).toString()
             viewModel.changeValueSifat(selectedItem)
         }
-        setupRVPreviewFile()
+    }
+    
+    private fun observeErrorMessageBottomSheet() {
+        viewModel.errorBottomSheet.observe(viewLifecycleOwner) { message ->
+            if (!message.isNullOrEmpty())
+                TastyToasty.makeText(
+                    requireContext(), message, TastyToasty.LONG,
+//                    if (result?.status == 200) R.drawable.ic_done else R.drawable.ic_error,
+                    R.drawable.ic_done,
+                    R.color.green_success,
+                    R.color.white, false
+                ).show()
+        }
+    }
+    
+    private fun showBottomSheetInstansi() {
+        val bottomSheet = BottomSheetDialog(requireContext())
+        val bottomSheetBinding =
+            BottomSheetInstansiBinding.inflate(LayoutInflater.from(requireContext()))
+        bottomSheet.setContentView(bottomSheetBinding.root)
+        bottomSheet.show()
         
-        //hasil dari camera fragment
-        navC.currentBackStackEntry?.savedStateHandle?.getLiveData<File>(KEY_PHOTO)
-            ?.observe(viewLifecycleOwner) {
-                val uri = Uri.fromFile(it)
-                val bitmap = context?.getBitmap(uri)
-                if (bitmap != null) {
-                    previewFileAdapter.addItem(FileSuratModel(bitmap, it))
-                    binding.tvTotalFileTerpilih.text = "${listFile.size} Terpilih"
+        bottomSheetBinding.apply {
+            btnHapusInstansi.visibility = View.INVISIBLE
+            btnBatalUbahInstansi.visibility = View.VISIBLE
+            inputNamaInstansi.isEnabled = true
+            inputAlamatInstansi.isEnabled = true
+            btnUbahInstansi.text = "Tambah"
+            btnBatalUbahInstansi.setOnClickListener { bottomSheet.cancel() }
+            btnUbahInstansi.setOnClickListener {
+                if (inputNamaInstansi.text?.isEmpty() == true) {
+                    inputNamaInstansi.error = "Nama Instansi tidak boleh kosong!"
+                    return@setOnClickListener
                 }
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Instansi")
+                    .setIcon(R.drawable.ic_add)
+                    .setMessage("Apakah Anda yakin ingin menambah instansi ini?")
+                    .setNegativeButton("Batal") { dialog, _ -> dialog.cancel() }
+                    .setPositiveButton("Tambah") { dialog, _ ->
+                        viewModel.addInstansi(
+                            inputNamaInstansi.text?.trim().toString(),
+                            inputAlamatInstansi.text?.trim().toString()
+                        )
+                        bottomSheet.dismiss()
+                        dialog.dismiss()
+                    }.show()
             }
-        
+        }
+    }
+    
+    private fun observeErrorMessage() {
+        viewModel.message.observe(viewLifecycleOwner) { msg ->
+            if (msg != null)
+                message = msg
+        }
+    }
+    
+    private fun previewFileListener() {
         previewFileAdapter.setOnItemClicked(object : RvPreviewFileAdapter.Listener {
             override fun onItemClicked(image: Bitmap) {
                 val dialog = Dialog(requireContext())
@@ -188,25 +253,22 @@ class TambahSuratMasukFragment : Fragment() {
                 )
                 dialog.show()
                 val imgPreview = dialog.findViewById<PhotoView>(R.id.img_preview_file)
-//                Glide.with(requireContext()).load(image).into(imgPreview)
                 imgPreview.setImageBitmap(image)
             }
             
             @SuppressLint("SetTextI18n")
             override fun onItemRemoved() {
-                binding.tvTotalFileTerpilih.text = "${listFile.size} Terpilih"
+                binding.tvTotalFileTerpilih.text = "${previewFileAdapter.size()} Terpilih"
             }
         })
-        
-        observeLoadingTambahSurat()
     }
     
     private fun observeLoadingTambahSurat() {
-        viewModel.isLoading.observe(viewLifecycleOwner){isLoading ->
-            binding.pbLoading.visibility = if(isLoading) View.VISIBLE else View.INVISIBLE
-            binding.tvLoading.visibility = if(isLoading) View.VISIBLE else View.INVISIBLE
-            binding.scrollTambahSuratMasuk.visibility = if(isLoading) View.GONE else View.VISIBLE
-            binding.btnSimpanSuratMasuk.visibility = if(isLoading) View.GONE else View.VISIBLE
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.pbLoading.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
+            binding.tvLoading.visibility = if (isLoading) View.VISIBLE else View.INVISIBLE
+            binding.scrollTambahSuratMasuk.visibility = if (isLoading) View.GONE else View.VISIBLE
+            binding.btnSimpanSuratMasuk.visibility = if (isLoading) View.GONE else View.VISIBLE
         }
     }
     
@@ -339,7 +401,7 @@ class TambahSuratMasukFragment : Fragment() {
         bottomSheetDialog.show()
         imgTambahData?.setOnClickListener {
             if (message.contains("instansi", true)) {
-                viewModel.insertInstansi(inputTambahData?.text?.trim().toString(), "")
+//                viewModel.insertInstansi(inputTambahData?.text?.trim().toString(), "")
             } else {
                 viewModel.insertSifat(inputTambahData?.text?.trim().toString())
             }
