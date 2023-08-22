@@ -15,16 +15,43 @@
 
         <TextView
             android:id="@+id/tv_nama_instansi"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black"
+            android:layout_marginEnd="15dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_ubah"
+            app:layout_constraintEnd_toStartOf="@+id/btn_ubah"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btn_ubah"
+            tools:text="Instansi" />
+
+        <ImageButton
+            android:id="@+id/btn_ubah"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_rectangle"
+            android:padding="8dp"
+            android:backgroundTint="@color/grey_50"
+            android:src="@drawable/round_edit_24"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintEnd_toStartOf="@id/btn_hapus"
+            app:layout_constraintTop_toTopOf="@+id/btn_hapus"
+            app:tint="@color/grey_300" />
+
+        <ImageButton
+            android:id="@+id/btn_hapus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_rectangle"
+            android:backgroundTint="@color/grey_50"
+            android:padding="8dp"
+            android:src="@drawable/baseline_delete_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5"
-            tools:text="Instansi" />
+            app:tint="@color/red_warning" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

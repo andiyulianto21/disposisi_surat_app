@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/blue_primary"
+    tools:context=".fragments.PencarianFragment">
+
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="15dp"
+        android:src="@drawable/round_arrow_back_24"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/layout_pencarian"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layout_pencarian" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_pencarian"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/rounded_rectangle"
+        android:backgroundTint="@color/grey_50"
+        android:paddingHorizontal="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_back"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/pencarian"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent"
+            android:hint="Berdasarkan nomor/instansi/perihal"
+            android:inputType="text"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/img_reset"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_reset"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/suggestion_surat_masuk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        android:text="di data surat masuk"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_hasil_cari" />
+
+    <TextView
+        android:id="@+id/suggestion_surat_keluar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:visibility="gone"
+        android:layout_marginTop="15dp"
+        android:text="di data surat keluar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/suggestion_surat_masuk"
+        app:layout_constraintTop_toBottomOf="@id/suggestion_surat_masuk" />
+
+
+    <TextView
+        android:id="@+id/tv_hasil_cari"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        tools:text="Hasil cari keyword ... pada surat masuk"
+        app:layout_constraintEnd_toEndOf="@+id/layout_pencarian"
+        app:layout_constraintStart_toStartOf="@+id/img_back"
+        app:layout_constraintTop_toBottomOf="@id/layout_pencarian" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_surat"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="15dp"
+        android:background="@color/grey_50"
+        android:overScrollMode="never"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@id/suggestion_surat_keluar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:listitem="@layout/card_surat_masuk" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

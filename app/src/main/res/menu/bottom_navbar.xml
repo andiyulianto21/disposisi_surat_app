@@ -2,19 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_beranda"
+        android:icon="@drawable/outline_dashboard_24"
+        android:title="Beranda" />
+
+    <item
+        android:id="@+id/menu_disposisi"
+        android:icon="@drawable/outline_directions_24"
+        android:title="Antrian Disposisi" />
+    <item
         android:id="@+id/menu_suratMasuk"
-        android:icon="@drawable/ic_baseline_login_24"
+        android:icon="@drawable/outline_input_24"
         android:title="Surat Masuk" />
     <item
         android:id="@+id/menu_suratKeluar"
-        android:icon="@drawable/ic_baseline_logout_24"
+        android:icon="@drawable/outline_output_24"
         android:title="Surat Keluar" />
-    <item
-        android:id="@+id/menu_disposisi"
-        android:icon="@drawable/ic_baseline_screen_share_24"
-        android:title="Disposisi" />
-    <item
-        android:id="@+id/menu_profile"
-        android:icon="@drawable/ic_baseline_person_pin_24"
-        android:title="Profil" />
 </menu>

@@ -55,7 +55,6 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/no_surat"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -75,7 +74,8 @@
                     android:layout_height="match_parent"
                     android:hint="Isi nomor surat masuk"
                     android:inputType="text"
-                    android:maxLength="100"
+                    android:textColor="@color/black"
+                    android:maxLength="30"
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +86,6 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/tgl_surat"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til_no_surat" />
 
@@ -105,7 +104,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:cursorVisible="false"
+                    android:inputType="textNoSuggestions"
                     android:focusable="false"
+                    android:textColor="@color/black"
                     android:hint="Pilih tanggal" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -126,7 +127,7 @@
                     android:layout_weight="1"
                     android:text="@string/instansi_pengirim"
                     android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_tambah_instansi_pengirim"
@@ -134,7 +135,8 @@
                     android:layout_height="45dp"
                     android:text="Tambah"
                     android:textAllCaps="false"
-                    android:textSize="12sp" />
+                    android:textSize="12sp"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
 
@@ -143,7 +145,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 app:hintAnimationEnabled="false"
                 app:hintEnabled="false"
                 app:layout_constraintTop_toBottomOf="@+id/ll_instansi_pengirim">
@@ -154,6 +156,58 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:hint="Pilih instansi"
+                    android:textColor="@color/black"
+                    android:inputType="none"
+                    android:maxLines="2" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_kategori"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_instansi_pengirim">
+
+                <TextView
+                    android:id="@+id/tv_kategori"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Kategori"
+                    android:textColor="@color/black"
+                    />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_tambah_kategori"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:text="Tambah"
+                    android:textAllCaps="false"
+                    android:textSize="12sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_kategori"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                app:hintAnimationEnabled="false"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/ll_kategori">
+
+                <AutoCompleteTextView
+                    android:id="@+id/option_kategori"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="Pilih kategori surat"
+                    android:textColor="@color/black"
                     android:inputType="none"
                     android:maxLines="2" />
 
@@ -166,57 +220,57 @@
             <!--                app:layout_constraintEnd_toEndOf="parent"-->
             <!--                app:layout_constraintHorizontal_bias="0.5"-->
             <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@+id/ll_instansi_pengirim"/>-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/ll_kategori"/>-->
 
-            <LinearLayout
-                android:id="@+id/ll_sifat_surat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_instansi_pengirim">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/ll_sifat_surat"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/til_kategori">-->
 
-                <TextView
-                    android:id="@+id/tv_sifat_surat"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/sifat_surat"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_sifat_surat"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:text="@string/sifat_surat"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    />-->
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_tambah_sifat_surat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="45dp"
-                    android:text="Tambah"
-                    android:textAllCaps="false"
-                    android:textSize="12sp"
-                    app:iconSize="18sp" />
+<!--                <com.google.android.material.button.MaterialButton-->
+<!--                    android:id="@+id/btn_tambah_sifat_surat"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="45dp"-->
+<!--                    android:text="Tambah"-->
+<!--                    android:textAllCaps="false"-->
+<!--                    android:textSize="12sp"-->
+<!--                    app:iconSize="18sp" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_sifat_surat"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                app:hintAnimationEnabled="false"
-                app:hintEnabled="false"
-                app:layout_constraintTop_toBottomOf="@+id/ll_sifat_surat">
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/til_sifat_surat"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                app:hintAnimationEnabled="false"-->
+<!--                app:hintEnabled="false"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/ll_sifat_surat">-->
 
-                <AutoCompleteTextView
-                    android:id="@+id/option_sifat_surat"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:ellipsize="end"
-                    android:hint="Pilih sifat"
-                    android:inputType="none"
-                    android:maxLines="1" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                <AutoCompleteTextView-->
+<!--                    android:id="@+id/option_sifat_surat"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:ellipsize="end"-->
+<!--                    android:hint="Pilih sifat"-->
+<!--                    android:inputType="none"-->
+<!--                    android:maxLines="1" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
             <TextView
                 android:id="@+id/tv_perihal"
@@ -225,9 +279,8 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/perihal"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/til_sifat_surat" />
+                app:layout_constraintTop_toBottomOf="@+id/til_kategori" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_perihal"
@@ -245,37 +298,32 @@
                     android:layout_height="match_parent"
                     android:gravity="top"
                     android:hint="Isi singkat perihal"
+                    android:textColor="@color/black"
                     android:inputType="text"
                     android:maxLength="255"
                     android:maxLines="2" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/ll_file_surat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/til_perihal">
 
                 <TextView
                     android:id="@+id/tv_file_surat"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/file_surat"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_total_file_terpilih"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:text="0 Terpilih"
-                    android:visibility="invisible"
-                    android:textSize="12sp" />
+                    android:text="@string/file_surat"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_pilih_file"
@@ -283,9 +331,14 @@
                     android:layout_height="45dp"
                     android:text="Pilih File"
                     android:textAllCaps="false"
-                    android:textSize="12sp"/>
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5"
+                    tools:ignore="TouchTargetSizeCheck" />
 
-            </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_file_surat"

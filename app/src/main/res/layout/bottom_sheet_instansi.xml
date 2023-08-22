@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    android:paddingBottom="20dp">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -23,7 +24,6 @@
         android:layout_marginTop="20dp"
         android:text="Nama Instansi"
         android:textColor="@color/black"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,6 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +47,7 @@
             android:layout_height="match_parent"
             android:enabled="false"
             android:inputType="text"
+            android:textColor="@color/black"
             android:maxLines="1"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -58,7 +60,6 @@
         android:layout_marginTop="20dp"
         android:text="Alamat Instansi"
         android:textColor="@color/black"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -81,31 +83,20 @@
             android:layout_height="match_parent"
             android:gravity="top"
             android:enabled="false"
+            android:hint="opsional"
             android:inputType="textMultiLine"
             android:maxLines="3"
-            android:minLines="2"
+            android:textColor="@color/black"
+            android:minLines="3"
             tools:ignore="SpeakableTextPresentCheck" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_hapus_instansi"
-        style="@style/Widget.Material3.Button.OutlinedButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hapus"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:cornerRadius="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_ubah_instansi" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_batal_ubah_instansi"
-        style="@style/Widget.Material3.Button.OutlinedButton"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Batal"
-        android:visibility="invisible"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:cornerRadius="5dp"
@@ -117,14 +108,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
         android:text="Ubah"
         android:layout_marginStart="20dp"
-        android:textSize="12sp"
         app:cornerRadius="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/btn_hapus_instansi"
+        app:layout_constraintStart_toEndOf="@+id/btn_batal_ubah_instansi"
         app:layout_constraintTop_toBottomOf="@id/til_alamat_instansi" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

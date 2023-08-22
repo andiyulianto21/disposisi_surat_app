@@ -22,13 +22,14 @@
 
     <ImageView
         android:id="@+id/img_download_file"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_round_download_for_offline_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/rounded_rectangle"
         android:backgroundTint="@color/white"
         app:tint="@color/black" />
 </androidx.constraintlayout.widget.ConstraintLayout>

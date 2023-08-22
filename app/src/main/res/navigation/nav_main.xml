@@ -3,52 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/splashScreenFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        android:name="com.daylantern.suratatmaluhur.fragments.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_menu_suratMasuk"
             app:destination="@id/menu_suratMasuk"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_profileFragment"
+            app:destination="@id/menu_beranda" />
+        <action
+            android:id="@+id/action_loginFragment_to_lupaPasswordFragment"
+            app:destination="@id/lupaPasswordFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_detailSuratMasukFragment"
+            app:destination="@id/detailSuratMasukFragment" />
     </fragment>
     <fragment
-        android:id="@+id/menu_profile"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/action_menu_profil_to_ubahDataDiriFragment"
-            app:destination="@id/ubahDataDiriFragment" />
-        <action
-            android:id="@+id/action_menu_profil_to_gantiPasswordFragment"
-            app:destination="@id/gantiPasswordFragment" />
+        android:id="@+id/menu_beranda"
+        android:name="com.daylantern.suratatmaluhur.fragments.BerandaFragment"
+        android:label="Beranda"
+        tools:layout="@layout/fragment_beranda">
         <action
             android:id="@+id/action_menu_profil_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_menu_profile_to_instansiFragment"
+            android:id="@+id/action_menu_beranda_to_instansiFragment"
             app:destination="@id/instansiFragment" />
+        <action
+            android:id="@+id/action_menu_beranda_to_kotakPesanFragment"
+            app:destination="@id/notifikasiFragment" />
+        <action
+            android:id="@+id/action_menu_dashboard_to_pencarianFragment"
+            app:destination="@id/pencarianFragment" />
+        <action
+            android:id="@+id/action_menu_dashboard_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/menu_disposisi"
-        android:name="com.daylantern.arsipsuratpembinaan.DisposisiFragment"
-        android:label="fragment_disposisi"
-        tools:layout="@layout/fragment_disposisi" >
+        android:name="com.daylantern.suratatmaluhur.fragments.DisposisiFragment"
+        android:label="Antrian Disposisi"
+        tools:layout="@layout/fragment_disposisi">
         <action
             android:id="@+id/action_menu_disposisi_to_tambahDisposisiFragment"
             app:destination="@id/tambahDisposisiFragment" />
     </fragment>
     <fragment
         android:id="@+id/menu_suratMasuk"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.SuratMasukFragment"
-        android:label="fragment_surat_masuk"
-        tools:layout="@layout/fragment_surat_masuk" >
+        android:name="com.daylantern.suratatmaluhur.fragments.SuratMasukFragment"
+        android:label="Surat Masuk"
+        tools:layout="@layout/fragment_surat_masuk">
         <action
             android:id="@+id/action_menu_suratMasuk_to_tambahSuratMasukFragment"
             app:destination="@id/tambahSuratMasukFragment" />
@@ -61,55 +74,168 @@
     </fragment>
     <fragment
         android:id="@+id/menu_suratKeluar"
-        android:name="com.daylantern.arsipsuratpembinaan.SuratKeluarFragment"
-        android:label="fragment_surat_keluar"
-        tools:layout="@layout/fragment_surat_keluar" />
-    <fragment
-        android:id="@+id/ubahDataDiriFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.UbahDataDiriFragment"
-        android:label="fragment_ubah_data_diri"
-        tools:layout="@layout/fragment_ubah_data_diri" />
-    <fragment
-        android:id="@+id/gantiPasswordFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.GantiPasswordFragment"
-        android:label="fragment_ganti_password"
-        tools:layout="@layout/fragment_ganti_password" />
+        android:name="com.daylantern.suratatmaluhur.fragments.SuratKeluarFragment"
+        android:label="Surat Keluar"
+        tools:layout="@layout/fragment_surat_keluar" >
+        <action
+            android:id="@+id/action_menu_suratKeluar_to_detailSuratKeluarFragment"
+            app:destination="@id/detailSuratKeluarFragment" />
+    </fragment>
     <fragment
         android:id="@+id/tambahSuratMasukFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.TambahSuratMasukFragment"
-        android:label="fragment_tambah_surat_masuk"
-        tools:layout="@layout/fragment_tambah_surat_masuk" />
-    <fragment
-        android:id="@+id/buatDisposisiFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.BuatDisposisiFragment"
-        android:label="fragment_buat_disposisi"
-        tools:layout="@layout/fragment_buat_disposisi" />
+        android:name="com.daylantern.suratatmaluhur.fragments.TambahSuratMasukFragment"
+        android:label="Tambah Surat Masuk"
+        tools:layout="@layout/fragment_tambah_surat_masuk" >
+        <action
+            android:id="@+id/action_tambahSuratMasukFragment_to_detailSuratMasukFragment"
+            app:destination="@id/detailSuratMasukFragment"
+            app:popUpTo="@id/menu_suratMasuk" />
+    </fragment>
+
     <fragment
         android:id="@+id/tambahDisposisiFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.TambahDisposisiFragment"
-        android:label="fragment_tambah_disposisi"
-        tools:layout="@layout/fragment_tambah_disposisi" >
+        android:name="com.daylantern.suratatmaluhur.fragments.TambahDisposisiFragment"
+        android:label="Disposisi Surat Masuk"
+        tools:layout="@layout/fragment_tambah_disposisi">
         <argument
             android:name="idSuratMasuk"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_tambahDisposisiFragment_to_detailSuratMasukFragment"
+            app:destination="@id/detailSuratMasukFragment"
+            app:popUpTo="@id/menu_disposisi" />
     </fragment>
     <fragment
         android:id="@+id/detailSuratMasukFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.DetailSuratMasukFragment"
-        android:label="fragment_detail_surat_masuk"
-        tools:layout="@layout/fragment_detail_surat_masuk" >
+        android:name="com.daylantern.suratatmaluhur.fragments.DetailSuratMasukFragment"
+        android:label="Detail Surat Masuk"
+        tools:layout="@layout/fragment_detail_surat_masuk">
         <argument
             android:name="idSuratMasuk"
             app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.CameraFragment"
-        android:label="fragment_camera"
+        android:name="com.daylantern.suratatmaluhur.fragments.CameraFragment"
+        android:label="Kamera File Surat"
         tools:layout="@layout/fragment_camera" />
     <fragment
         android:id="@+id/instansiFragment"
-        android:name="com.daylantern.arsipsuratpembinaan.fragments.InstansiFragment"
-        android:label="fragment_instansi"
+        android:name="com.daylantern.suratatmaluhur.fragments.InstansiFragment"
+        android:label="Data Instansi"
         tools:layout="@layout/fragment_instansi" />
+    <fragment
+        android:id="@+id/notifikasiFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.NotifikasiFragment"
+        android:label="Riwayat Notifikasi"
+        tools:layout="@layout/fragment_notifikasi">
+        <action
+            android:id="@+id/action_NotifikasiFragment_to_detailSuratMasukFragment"
+            app:destination="@id/detailSuratMasukFragment" />
+        <action
+            android:id="@+id/action_NotifikasiFragment_to_tambahDisposisiFragment"
+            app:destination="@id/tambahDisposisiFragment" />
+        <action
+            android:id="@+id/action_notifikasiFragment_to_detailSuratKeluarFragment"
+            app:destination="@id/detailSuratKeluarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pencarianFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.PencarianFragment"
+        android:label="fragment_pencarian"
+        tools:layout="@layout/fragment_pencarian" >
+        <action
+            android:id="@+id/action_pencarianFragment_to_tambahDisposisiFragment"
+            app:destination="@id/tambahDisposisiFragment"
+            app:popUpTo="@id/pencarianFragment" />
+        <action
+            android:id="@+id/action_pencarianFragment_to_detailSuratKeluarFragment"
+            app:destination="@id/detailSuratKeluarFragment"
+            app:popUpTo="@id/pencarianFragment" />
+        <action
+            android:id="@+id/action_pencarianFragment_to_detailSuratMasukFragment"
+            app:destination="@id/detailSuratMasukFragment"
+            app:popUpTo="@id/pencarianFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.SplashScreenFragment"
+        android:label="Splash"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreenFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/tambahSuratKeluarFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.TambahSuratKeluarFragment"
+        android:label="Tambah Surat Keluar"
+        tools:layout="@layout/fragment_tambah_surat_keluar">
+        <action
+            android:id="@+id/action_tambahSuratKeluarFragment_to_detailSuratKeluarFragment"
+            app:destination="@id/detailSuratKeluarFragment"
+            app:popUpTo="@id/menu_suratKeluar" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailSuratKeluarFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.DetailSuratKeluarFragment"
+        android:label="Detail Surat Keluar"
+        tools:layout="@layout/fragment_detail_surat_keluar" >
+        <argument
+            android:name="idSuratKeluar"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_detailSuratKeluarFragment_to_tambahSuratKeluarFragment"
+            app:destination="@id/tambahSuratKeluarFragment" />
+        <action
+            android:id="@+id/action_detailSuratKeluarFragment_to_editSuratKeluarFragment"
+            app:destination="@id/editSuratKeluarFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/lupaPasswordFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.LupaPasswordFragment"
+        android:label="Lupa Password"
+        tools:layout="@layout/fragment_lupa_password" >
+        <action
+            android:id="@+id/action_lupaPasswordFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.ResetPasswordFragment"
+        android:label="Reset Password"
+        tools:layout="@layout/fragment_reset_password" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/pegawaiFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.PegawaiFragment"
+        android:label="Data Pegawai"
+        tools:layout="@layout/fragment_pegawai" />
+    <fragment
+        android:id="@+id/kategoriFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.KategoriFragment"
+        android:label="Data Kategori Surat"
+        tools:layout="@layout/fragment_kategori" />
+    <fragment
+        android:id="@+id/bagianFragment"
+        android:name="com.daylantern.suratatmaluhur.fragments.BagianFragment"
+        android:label="Data Bagian"
+        tools:layout="@layout/fragment_bagian" />
+    <fragment
+        android:id="@+id/editSuratKeluarFragment"
+        android:name="com.daylantern.suratatmaluhur.EditSuratKeluarFragment"
+        android:label="Ubah Surat Keluar"
+        tools:layout="@layout/fragment_tambah_surat_keluar">
+
+        <argument
+            android:name="dataSurat"
+            app:argType="com.daylantern.suratatmaluhur.entities.SuratKeluar" />
+        <action
+            android:id="@+id/action_editSuratKeluarFragment_to_detailSuratKeluarFragment"
+            app:destination="@id/detailSuratKeluarFragment"
+            app:popUpTo="@id/detailSuratKeluarFragment" />
+    </fragment>
 </navigation>

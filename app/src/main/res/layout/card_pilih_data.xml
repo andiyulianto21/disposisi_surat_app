@@ -9,15 +9,13 @@
 
     <CheckBox
         android:id="@+id/cb_terpilih"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_width="49dp"
+        android:layout_height="52dp"
         android:enabled="false"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_detail_data"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tv_nama_data" />
 
     <TextView
         android:id="@+id/tv_nama_data"
@@ -25,12 +23,42 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
         android:layout_marginRight="15dp"
         android:maxLines="2"
-        android:text="TextView"
+        android:text="Nama"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/cb_terpilih"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_detail_data"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cb_terpilih"
-        app:layout_constraintTop_toTopOf="@+id/cb_terpilih" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_detail_data"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Detail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/cb_terpilih"
+        app:layout_constraintTop_toBottomOf="@+id/tv_nama_data" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey_50"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
